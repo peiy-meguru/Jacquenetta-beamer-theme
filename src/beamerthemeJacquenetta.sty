@@ -13,6 +13,7 @@
 %                    e.g. accent=jq@orange, accent=teal
 %   noborder         Disable the signature dark border
 %   chinese          Enable CJK support for Chinese (XeLaTeX/LuaLaTeX)
+%   code             Enable code environment support
 %
 % Dependencies: tikz, tcolorbox, helvet, microtype, setspace
 % ----------------------------------------------------------
@@ -25,6 +26,8 @@
 % === Pass options to sub-themes ================================
 \newif\ifjq@chinese
 \jq@chinesefalse
+\newif\ifjq@code
+\jq@codefalse
 \DeclareOptionBeamer{accent}{%
   \PassOptionsToPackage{accent=#1}{beamercolorthemeJacquenetta}}
 \DeclareOptionBeamer{noborder}{%
@@ -32,6 +35,7 @@
 \DeclareOptionBeamer{chinese}{%
   \PassOptionsToPackage{chinese}{beamerfontthemeJacquenetta}%
   \jq@chinesetrue}
+\DeclareOptionBeamer{code}{\jq@codetrue}
 \ProcessOptionsBeamer
 
 % === Required packages =========================================
@@ -47,6 +51,9 @@
 \useinnertheme{Jacquenetta}
 \ifjq@chinese
   \useinnertheme{Jacquenetta-cjk}
+\fi
+\ifjq@code
+  \useinnertheme{Jacquenetta-code}
 \fi
 \useoutertheme{Jacquenetta}
 
