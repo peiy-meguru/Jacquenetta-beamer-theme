@@ -27,8 +27,6 @@
   jqterminator/.style={
     jqcbase,
     shape=rounded rectangle,
-    rounded rectangle west arc=0pt,
-    rounded rectangle east arc=0pt,
     draw=jqaccent,
     line width=1.2pt,
   },
@@ -150,10 +148,18 @@
 % Drawing to the target's border anchor avoids PGF warnings on
 % non-rectangular nodes (e.g. diamonds) and keeps arrowheads aligned.
 \newcommand{\jqbranch@h}[5][]{%
-  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.25, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+  \if\relax\detokenize{#4}\relax
+    \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| (#3.\jqtotargetanchor{#5});%
+  \else
+    \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.25, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+  \fi
 }
 \newcommand{\jqbranch@v}[5][]{%
-  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) |- node[pos=0.25, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+  \if\relax\detokenize{#4}\relax
+    \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) |- (#3.\jqtotargetanchor{#5});%
+  \else
+    \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) |- node[pos=0.25, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+  \fi
 }
 \newcommand{\jqbranch}[5][]{%
   \ifcsname jq@branch@#5\endcsname
