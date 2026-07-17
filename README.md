@@ -101,6 +101,58 @@ make example
 
 > **注意**：中文支持需要 **XeLaTeX** 或 **LuaLaTeX**。`pdflatex` 无法直接编译中文内容。
 
+## 新功能速览
+
+Jacquenetta 现在支持代码高亮与流程图，均通过主题选项按需启用。
+
+### 代码高亮
+
+启用 `code` 选项，并在 `[fragile]` 帧中使用：
+
+```latex
+\usetheme[chinese, code]{Jacquenetta}
+
+\begin{frame}[fragile]{训练循环}
+\begin{jqcodebox}[language=Python, title=Training loop]
+for epoch in range(num_epochs):
+    model.train()
+    for batch in train_loader:
+        optimizer.zero_grad()
+        loss = criterion(model(batch.x), batch.y)
+        loss.backward()
+        optimizer.step()
+\end{jqcodebox}
+\end{frame}
+```
+
+### 流程图
+
+启用 `flowchart` 选项，使用 `jqflowchart` 环境与 `\jqnode` / `\jqedge` / `\jqbranch`：
+
+```latex
+\usetheme[chinese, flowchart]{Jacquenetta}
+
+\begin{frame}{训练流程}
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
+  \jqnode{terminator}{start}{开始}{}
+  \jqnode{process}{prep}{预处理}{below=of start}
+  \jqedge{start}{prep}{}
+  \jqnode{decision}{ok}{数据足够？}{below=of prep}
+  \jqedge{prep}{ok}{}
+  \jqnode{process}{train}{训练模型}{below=of ok}
+  \jqbranch{ok}{train}{是}{below}
+  \jqnode{process}{collect}{收集数据}{right=of ok}
+  \jqbranch{ok}{collect}{否}{right}
+\end{jqflowchart}
+\end{frame}
+```
+
+可同时启用 `chinese`、`code`、`flowchart`：
+
+```latex
+\usetheme[chinese, code, flowchart]{Jacquenetta}
+```
+
 ## 主题选项
 
 ```latex
