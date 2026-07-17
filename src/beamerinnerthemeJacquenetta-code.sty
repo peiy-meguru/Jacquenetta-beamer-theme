@@ -51,11 +51,6 @@
   \lstset{#1}%
 }
 
-\tcbset{
-  jq@codebox@language/.code={\lstset{language=#1}},
-  jq@codebox@language@style/.style={jq@codebox@language={#1}},
-}
-
 % === jqcodebox: tcolorbox + listings ===
 \newtcblisting{jqcodebox}[1][]{
   enhanced,
@@ -71,7 +66,7 @@
   right=4pt,
   breakable,
   listing only,
-  language/.style={jq@codebox@language@style={##1}},
+  language/.code={\pgfkeysalso{listing options={language=##1}}},
   listing options={
     basicstyle=\ttfamily\footnotesize,
     keywordstyle=\color{jqblue}\bfseries,
