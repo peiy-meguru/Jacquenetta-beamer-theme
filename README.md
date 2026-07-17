@@ -112,6 +112,7 @@ make example
 | `accent=<颜色>` | 任意 xcolor 名称或主题别名 | `jqblue` |
 | `noborder` | 关闭签名边框 | 关闭 |
 | `chinese` | 启用中文 CJK 支持（XeLaTeX/LuaLaTeX） | 关闭 |
+| `code` | 启用 `jqlisting` 与 `jqcodebox` 代码环境 | 关闭 |
 
 ## 中文支持
 
@@ -136,6 +137,8 @@ make example
 ```latex
 \logo{\includegraphics[height=0.7cm]{logo.png}}
 ```
+
+> **注意**：避免在 `\logo{...}` 中使用文字（尤其是中文）。`\logo` 在导言区执行时字体尚未就绪，可能触发 `nullfont` 警告。建议始终使用图片 Logo。
 
 若只想在标题页显示 Logo（不在页脚显示），在 `\titleframe` 后清空它：
 
@@ -167,6 +170,28 @@ make example
 \begin{problock}{标题}      % 强调色边框，更丰富的内容
 \begin{highlightbox}         % 橙色边框，无标题
 ```
+
+## 代码环境
+
+启用 `code` 选项后，可使用以下环境：
+
+```latex
+% 行内代码片段：带标题的高亮卡片
+\begin{jqcodebox}[language=Python, title=训练循环]
+for epoch in range(epochs):
+    ...
+\end{jqcodebox}
+
+% 跨帧讲解：按行号切片展示
+\begin{jqlisting}[language=Python, firstline=1, lastline=12]
+...
+\end{jqlisting}
+```
+
+- `jqcodebox` 基于 `tcolorbox` + `listings`，适合单帧内展示的代码片段。
+- `jqlisting` 基于 `listings`，适合把长代码切成多帧逐行讲解。
+- 使用 `\jqinputlisting[language=Python, firstline=1, lastline=20]{file.py}` 直接读取外部文件。
+- 包含代码环境的 `frame` 需要声明 `[fragile]`。
 
 ## 调色板
 
