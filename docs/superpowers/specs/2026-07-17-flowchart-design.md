@@ -53,7 +53,7 @@ beamerthemeJacquenetta.sty
 
 ### 5.1 New file: `src/beamerinnerthemeJacquenetta-flowchart.sty`
 
-- Loads `tikz` (already loaded by main theme) and libraries `shapes.geometric`, `positioning`, `arrows.meta`.
+- Loads `tikz` (already loaded by main theme) and libraries `shapes.geometric`, `shapes.misc`, `positioning`, `arrows.meta`.
 - Defines a base style `jqcbase` with common parameters (font, inner sep, minimum height, line width, dark border, white fill, text color).
 - Defines per-node styles that inherit from `jqcbase` and add shape-specific geometry and an accent edge/border for the terminator node.
 - Defines an edge style `jqcedge` with:
@@ -67,7 +67,7 @@ beamerthemeJacquenetta.sty
 
 | Style | Shape | Default size | Accent |
 |-------|-------|--------------|--------|
-| `jqterminator` | rounded rectangle | min width 2.2cm, min height 0.9cm | top border or left border in `jqaccent` |
+| `jqterminator` | rounded rectangle | min width 2.2cm, min height 0.9cm | full border drawn in `jqaccent` |
 | `jqprocess` | rectangle | min width 2.2cm, min height 0.9cm | none |
 | `jqdecision` | diamond | aspect=2, min width 2cm | none |
 | `jqio` | trapezium | trapezium left angle=70, right angle=110 | none |
@@ -109,7 +109,7 @@ The `type` maps to the TikZ style: `terminator`, `process`, `decision`, `io`, `s
 \jqedge[<options>]{<from id>}{<to id>}{<label>}
 ```
 
-Connects two nodes using orthogonal routing with a label placed midway.
+Connects two nodes with a straight, thick arrow; an optional label is placed midway.
 
 ```latex
 \jqedge{start}{prep}{}

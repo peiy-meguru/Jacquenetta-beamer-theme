@@ -54,7 +54,7 @@ Create `src/beamerinnerthemeJacquenetta-flowchart.sty` with the standard package
 \mode<presentation>
 
 \RequirePackage{tikz}
-\usetikzlibrary{shapes.geometric, positioning, arrows.meta}
+\usetikzlibrary{shapes.geometric, shapes.misc, positioning, arrows.meta}
 
 \mode<all>
 \endinput
@@ -155,14 +155,18 @@ Append the high-level commands.
 % === \jqedge =========================================================
 % Usage: \jqedge[<options>]{<from>}{<to>}{<label>}
 \newcommand{\jqedge}[4][]{%
-  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
+  \if\relax\detokenize{#4}\relax
+    \draw[jqcedge, #1] (#2) -- (#3);%
+  \else
+    \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
+  \fi
 }
 
 % === \jqbranch =======================================================
 % Usage: \jqbranch[<options>]{<from>}{<to>}{<label>}{<direction>}
 % <direction> should be a TikZ direction keyword such as left, right, above, below.
-% The actual implementation maps these to anchors and uses border anchors to avoid
-% PGF warnings on non-rectangular nodes (see the shipped .sty file).
+% The actual implementation maps these to anchors, uses border anchors to avoid
+% PGF warnings on non-rectangular nodes, and omits the label when empty.
 \newcommand{\jqbranch}[5][]{%
   \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
 }
