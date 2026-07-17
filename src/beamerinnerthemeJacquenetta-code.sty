@@ -15,8 +15,16 @@
 % === Global listings style ===
 \definecolor{jq@codebg}{HTML}{F7F7F7}
 
+% Robustly use the theme's CJK-aware mono font if available; otherwise
+% fall back to the standard typewriter family.
+\@ifundefined{jq@monofont}{%
+  \def\jq@codebasicstyle{\ttfamily\footnotesize}%
+}{%
+  \def\jq@codebasicstyle{\jq@monofont\footnotesize}%
+}
+
 \lstset{
-  basicstyle=\ttfamily\footnotesize,
+  basicstyle=\jq@codebasicstyle,
   backgroundcolor=\color{jq@codebg},
   keywordstyle=\color{jqblue}\bfseries,
   stringstyle=\color{jqgreen},
@@ -68,7 +76,7 @@
   listing only,
   language/.code={\pgfkeysalso{listing options={language=##1}}},
   listing options={
-    basicstyle=\ttfamily\footnotesize,
+    basicstyle=\jq@codebasicstyle,
     keywordstyle=\color{jqblue}\bfseries,
     stringstyle=\color{jqgreen},
     commentstyle=\color{jqgray}\itshape,
