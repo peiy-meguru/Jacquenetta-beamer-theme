@@ -23,12 +23,15 @@
 \mode<presentation>
 
 % === Pass options to sub-themes ================================
+\newif\ifjq@chinese
+\jq@chinesefalse
 \DeclareOptionBeamer{accent}{%
   \PassOptionsToPackage{accent=#1}{beamercolorthemeJacquenetta}}
 \DeclareOptionBeamer{noborder}{%
   \PassOptionsToPackage{noborder}{beamerouterthemeJacquenetta}}
 \DeclareOptionBeamer{chinese}{%
-  \PassOptionsToPackage{chinese}{beamerfontthemeJacquenetta}}
+  \PassOptionsToPackage{chinese}{beamerfontthemeJacquenetta}%
+  \jq@chinesetrue}
 \ProcessOptionsBeamer
 
 % === Required packages =========================================
@@ -42,6 +45,9 @@
 \usecolortheme{Jacquenetta}
 \usefonttheme{Jacquenetta}
 \useinnertheme{Jacquenetta}
+\ifjq@chinese
+  \useinnertheme{Jacquenetta-cjk}
+\fi
 \useoutertheme{Jacquenetta}
 
 \mode<all>
