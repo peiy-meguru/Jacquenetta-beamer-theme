@@ -1,5 +1,5 @@
 \documentclass[aspectratio=169]{beamer}
-\usetheme[chinese]{Jacquenetta}
+\usetheme[chinese, code]{Jacquenetta}
 
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
@@ -10,13 +10,9 @@
 \institute{GitHub --- Jacquenetta-beamer-theme}
 \date{\today}
 
-\logo{%
-  \colorbox{jqdark}{%
-    \textcolor{white}{%
-      \fontsize{6}{7}\selectfont\bfseries\quad MY INSTITUTION \quad 我的机构\quad%
-    }%
-  }%
-}
+% Logo placeholder: use an image logo in real documents.
+% Text in \logo is evaluated before fonts are ready and may cause nullfont warnings.
+\logo{\includegraphics[height=0.7cm]{example-image}}
 
 \begin{document}
 
@@ -229,10 +225,52 @@
 \end{frame}
 
 % ============================================================
+\section{代码 / Code}
+% ============================================================
+
+\sectionframe{03}{代码 Code}
+
+\begin{frame}[fragile]{代码片段 / Code snippet}
+    \begin{jqcodebox}[language=Python, title=训练循环 / Training loop]
+for epoch in range(num_epochs):
+    model.train()
+    for batch in train_loader:
+        optimizer.zero_grad()
+        loss = criterion(model(batch.x), batch.y)
+        loss.backward()
+        optimizer.step()
+    \end{jqcodebox}
+\end{frame}
+
+\begin{frame}[fragile]{代码切片 / Code slices}
+    \begin{jqlisting}[language=Python, firstline=1, lastline=8, title=Part 1: 导入]
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = nn.Linear(10, 1)
+    \end{jqlisting}
+\end{frame}
+
+\begin{frame}[fragile]{代码切片 / Code slices (continued)}
+    \begin{jqlisting}[language=Python, firstline=9, lastline=16, title=Part 2: 训练]
+    def forward(self, x):
+        return self.fc(x)
+
+model = Net()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+criterion = nn.MSELoss()
+    \end{jqlisting}
+\end{frame}
+
+% ============================================================
 \section{颜色 / Colors}
 % ============================================================
 
-\sectionframe{03}{颜色 Colors}
+\sectionframe{04}{颜色 Colors}
 
 \begin{frame}{调色板 / Color palette}
     Jacquenetta 定义了四种主题颜色 / Jacquenetta defines four theme colors:
@@ -286,7 +324,7 @@
 \section{总结 / Conclusion}
 % ============================================================
 
-\sectionframe{04}{总结 Conclusion}
+\sectionframe{05}{总结 Conclusion}
 
 \begin{frame}{总结 / Summary}
     \begin{problock}{Jacquenetta 一览 / Jacquenetta at a glance}
