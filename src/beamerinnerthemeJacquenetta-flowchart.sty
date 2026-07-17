@@ -1,0 +1,133 @@
+% ----------------------------------------------------------
+% beamerinnerthemeJacquenetta-flowchart.sty — Flowchart support
+% Jacquenetta Beamer Theme | CC BY-SA 4.0
+% ----------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemeJacquenetta-flowchart}%
+  [2026/07/17 v1.2 Jacquenetta flowchart environments]
+
+\mode<presentation>
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes.geometric, shapes.misc, positioning, arrows.meta}
+
+% === Base node style =================================================
+\tikzset{
+  jqcbase/.style={
+    font=\small\sffamily,
+    text=jqdark,
+    fill=white,
+    draw=jqdark,
+    line width=0.8pt,
+    inner sep=6pt,
+    minimum height=0.9cm,
+    minimum width=2.2cm,
+    align=center,
+  },
+  jqterminator/.style={
+    jqcbase,
+    shape=rounded rectangle,
+    rounded rectangle west arc=0pt,
+    rounded rectangle east arc=0pt,
+    draw=jqaccent,
+    line width=1.2pt,
+  },
+  jqprocess/.style={
+    jqcbase,
+    shape=rectangle,
+  },
+  jqdecision/.style={
+    jqcbase,
+    shape=diamond,
+    aspect=2,
+    inner sep=4pt,
+  },
+  jqio/.style={
+    jqcbase,
+    shape=trapezium,
+    trapezium left angle=70,
+    trapezium right angle=110,
+  },
+  jqsubprocess/.style={
+    jqcbase,
+    shape=rectangle,
+    double=jqdark,
+    double distance=1.5pt,
+  },
+}
+
+% === Edge and label styles ===========================================
+\tikzset{
+  jqcedge/.style={
+    ->,
+    >={Stealth[length=3mm, width=2mm]},
+    draw=jqdark,
+    line width=1.2pt,
+    rounded corners=3pt,
+  },
+  jqclabel/.style={
+    font=\scriptsize\sffamily,
+    text=jqgray,
+    fill=white,
+    inner sep=1pt,
+  },
+}
+
+% === Direction helpers ===============================================
+% The public \jqbranch command accepts direction keywords (left, right,
+% above, below).  These lookup tables map those keywords to the
+% corresponding TikZ compass anchors and to the anchor on the opposite
+% side used for edge labels.
+\expandafter\def\csname jq@anchor@left\endcsname{west}
+\expandafter\def\csname jq@anchor@right\endcsname{east}
+\expandafter\def\csname jq@anchor@above\endcsname{north}
+\expandafter\def\csname jq@anchor@below\endcsname{south}
+\expandafter\def\csname jq@oppanchor@left\endcsname{east}
+\expandafter\def\csname jq@oppanchor@right\endcsname{west}
+\expandafter\def\csname jq@oppanchor@above\endcsname{south}
+\expandafter\def\csname jq@oppanchor@below\endcsname{north}
+\newcommand{\jqtoanchor}[1]{%
+  \ifcsname jq@anchor@#1\endcsname
+    \csname jq@anchor@#1\endcsname
+  \else
+    #1%
+  \fi
+}
+\newcommand{\jqtooppanchor}[1]{%
+  \ifcsname jq@oppanchor@#1\endcsname
+    \csname jq@oppanchor@#1\endcsname
+  \else
+    #1%
+  \fi
+}
+
+% === jqflowchart environment =========================================
+\newenvironment{jqflowchart}[1][]{%
+  \begin{tikzpicture}[#1]%
+}{%
+  \end{tikzpicture}%
+}
+
+% === \jqnode =========================================================
+% Usage: \jqnode[<options>]{<type>}{<id>}{<text>}{<relative position>}
+\newcommand{\jqnode}[5][]{%
+  \node[jq#2, #1, #5] (#3) {#4};%
+}
+
+% === \jqedge =========================================================
+% Usage: \jqedge[<options>]{<from>}{<to>}{<label>}
+\newcommand{\jqedge}[4][]{%
+  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
+}
+
+% === \jqbranch =======================================================
+% Usage: \jqbranch[<options>]{<from>}{<to>}{<label>}{<direction>}
+% <direction> should be a direction keyword such as left, right, above,
+% or below.  It is mapped to the corresponding node anchor and to the
+% opposite-side anchor used for the label.
+\newcommand{\jqbranch}[5][]{%
+  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.75, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3);%
+}
+
+\mode<all>
+\endinput
