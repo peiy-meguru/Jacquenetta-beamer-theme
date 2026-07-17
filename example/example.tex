@@ -1,5 +1,5 @@
 \documentclass[aspectratio=169]{beamer}
-\usetheme[chinese, code]{Jacquenetta}
+\usetheme[chinese, code, flowchart]{Jacquenetta}
 
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
@@ -229,7 +229,7 @@
 \section{代码 / Code}
 % ============================================================
 
-\sectionframe{03}{代码 Code}
+\sectionframe{04}{代码 Code}
 
 \begin{frame}[fragile]{代码片段 / Code snippet}
     \begin{jqcodebox}[language=Python, title=训练循环 / Training loop]
@@ -268,10 +268,48 @@ criterion = nn.MSELoss()
 \end{frame}
 
 % ============================================================
+\section{流程图 / Flowcharts}
+% ============================================================
+
+\sectionframe{03}{流程图 Flowcharts}
+
+\begin{frame}{训练流程 / Training pipeline}
+\begin{jqflowchart}[node distance=1.3cm and 2.0cm]
+  \jqnode{terminator}{start}{开始 / Start}{}
+  \jqnode{io}{load}{加载数据 / Load data}{below=of start}
+  \jqedge{start}{load}{}
+  \jqnode{process}{pre}{预处理 / Preprocess}{below=of load}
+  \jqedge{load}{pre}{}
+  \jqnode{decision}{split}{数据足够？}{below=of pre}
+  \jqedge{pre}{split}{}
+  \jqnode{process}{train}{训练模型 / Train}{below=of split}
+  \jqbranch{split}{train}{是}{right}
+  \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
+  \jqbranch{split}{collect}{否}{right}
+  \jqnode{terminator}{end}{结束 / End}{below=of train}
+  \jqedge{train}{end}{}
+\end{jqflowchart}
+\end{frame}
+
+\begin{frame}{模型推断 / Inference}
+\begin{jqflowchart}[node distance=1.4cm and 2.4cm]
+  \jqnode{terminator}{in}{输入样本 / Input}{}
+  \jqnode{subprocess}{model}{模型前向 / Forward pass}{right=of in}
+  \jqedge{in}{model}{}
+  \jqnode{decision}{thresh}{置信度 > 0.5？}{right=of model}
+  \jqedge{model}{thresh}{}
+  \jqnode{process}{pos}{正例 / Positive}{below=of thresh}
+  \jqbranch{thresh}{pos}{Yes}{left}
+  \jqnode{process}{neg}{负例 / Negative}{above=of thresh}
+  \jqbranch{thresh}{neg}{No}{right}
+\end{jqflowchart}
+\end{frame}
+
+% ============================================================
 \section{颜色 / Colors}
 % ============================================================
 
-\sectionframe{04}{颜色 Colors}
+\sectionframe{05}{颜色 Colors}
 
 \begin{frame}{调色板 / Color palette}
     Jacquenetta 定义了四种主题颜色 / Jacquenetta defines four theme colors:
@@ -325,7 +363,7 @@ criterion = nn.MSELoss()
 \section{总结 / Conclusion}
 % ============================================================
 
-\sectionframe{05}{总结 Conclusion}
+\sectionframe{06}{总结 Conclusion}
 
 \begin{frame}{总结 / Summary}
     \begin{problock}{Jacquenetta 一览 / Jacquenetta at a glance}
