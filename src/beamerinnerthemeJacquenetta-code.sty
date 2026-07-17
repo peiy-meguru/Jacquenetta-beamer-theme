@@ -10,7 +10,7 @@
 
 \RequirePackage{listings}
 \RequirePackage{tcolorbox}
-\tcbuselibrary{skins, breakable}
+\tcbuselibrary{skins, breakable, listings}
 
 % === Global listings style ===
 \definecolor{jq@codebg}{HTML}{F7F7F7}
@@ -51,6 +51,11 @@
   \lstset{#1}%
 }
 
+\tcbset{
+  jq@codebox@language/.code={\lstset{language=#1}},
+  jq@codebox@language@style/.style={jq@codebox@language={#1}},
+}
+
 % === jqcodebox: tcolorbox + listings ===
 \newtcblisting{jqcodebox}[1][]{
   enhanced,
@@ -66,6 +71,7 @@
   right=2pt,
   breakable,
   listing only,
+  language/.style=jq@codebox@language@style,
   listing options={
     basicstyle=\ttfamily\footnotesize,
     keywordstyle=\color{jqblue}\bfseries,
