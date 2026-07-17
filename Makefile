@@ -1,4 +1,4 @@
-LATEX    = pdflatex
+LATEX    = xelatex
 STY      = $(wildcard src/*.sty)
 DESTDIR ?= $(shell kpsewhich -var-value=TEXMFHOME)
 INSTDIR  = $(DESTDIR)/tex/latex/jacquenetta

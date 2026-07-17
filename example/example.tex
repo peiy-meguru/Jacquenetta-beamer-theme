@@ -1,25 +1,19 @@
 \documentclass[aspectratio=169]{beamer}
-\usetheme{Jacquenetta}
+\usetheme[chinese]{Jacquenetta}
 
-\usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
-% Save code blocks as boxes to avoid fragile-frame conflicts
-\newsavebox{\codeboxa}
-\newsavebox{\codeboxb}
 
-% === Metadata ===================================================
 \title{Jacquenetta}
-\subtitle{A modern Beamer theme for scientific presentations}
+\subtitle{A modern Beamer theme for scientific presentations\\适用于学术演示的现代化极简主题}
 \author{Samuel Manchajm}
 \institute{GitHub --- Jacquenetta-beamer-theme}
 \date{\today}
 
-% === Logo test (colorbox, no external file needed) =============
 \logo{%
   \colorbox{jqdark}{%
     \textcolor{white}{%
-      \fontsize{6}{7}\selectfont\bfseries\quad MY INSTITUTION\quad%
+      \fontsize{6}{7}\selectfont\bfseries\quad MY INSTITUTION \quad 我的机构\quad%
     }%
   }%
 }
@@ -27,45 +21,45 @@
 \begin{document}
 
 % ============================================================
-% TITLE
+% 标题页 / Title
 % ============================================================
 \titleframe
-\logo{}  % <-- retire le logo du footer après le titre
-          % Supprime cette ligne pour le garder sur tous les slides
+\logo{}
 
 % ============================================================
-\section{Getting Started}
+\section{快速开始 / Getting Started}
 % ============================================================
 
-\begin{frame}{Minimal example}
-    Use the Jacquenetta theme with a single line in your preamble:
+\begin{frame}{最小示例 / Minimal example}
+    在导言区用一行即可使用 Jacquenetta 主题：
 
     \vspace{0.1cm}
     {\small\ttfamily
     \textbackslash documentclass[aspectratio=169]\{beamer\}\\
-    \textbackslash usetheme\{Jacquenetta\}\\[2pt]
-    \textbackslash title\{My Presentation\}\\
-    \textbackslash author\{Jane Doe\}\\
-    \textbackslash institute\{University of Somewhere\}\\[2pt]
+    \textbackslash usetheme\{Jacquenetta\}\quad % 英文内容\\
+    \textbackslash usetheme[chinese]\{Jacquenetta\}\quad % 中文内容\\[2pt]
+    \textbackslash title\{My Presentation / 我的演示\}\\
+    \textbackslash author\{Jane Doe / 张三\}\\
+    \textbackslash institute\{University of Somewhere / 某大学\}\\[2pt]
     \textbackslash begin\{document\}\\
     \quad\textbackslash titleframe\\
-    \quad\textbackslash begin\{frame\}\{Hello, world!\}\\
-    \quad\quad Your content here.\\
+    \quad\textbackslash begin\{frame\}\{Hello, world! / 你好，世界！\}\\
+    \quad\quad Your content here. / 你的内容。\\
     \quad\textbackslash end\{frame\}\\
     \textbackslash end\{document\}
     }
 \end{frame}
 
-\begin{frame}{Theme options}
-    Jacquenetta supports the following options:
+\begin{frame}{主题选项 / Theme options}
+    Jacquenetta 支持以下选项 / Jacquenetta supports the following options:
 
     \vspace{0.3cm}
     \begin{tabular}{ll}
         \toprule
-        \textbf{Option} & \textbf{Effect} \\
+        \textbf{选项 / Option} & \textbf{效果 / Effect} \\
         \midrule
-        \texttt{accent=<color>} & Change the accent color \\
-        \texttt{noborder}       & Disable the signature border \\
+        \texttt{accent=<颜色 / color>} & 更改强调色 / Change the accent color \\
+        \texttt{noborder}       & 关闭签名边框 / Disable the signature border \\
         \bottomrule
     \end{tabular}
 
@@ -78,174 +72,154 @@
 \end{frame}
 
 % ============================================================
-\section{Typography}
+\section{排版 / Typography}
 % ============================================================
 
-\sectionframe{01}{Typography}
+\sectionframe{01}{排版 Typography}
 
-\begin{frame}{Font styles}
-    Jacquenetta uses \textbf{Helvetica} for body text and
-    \textit{serif fonts} for mathematics.
+\begin{frame}{字体样式 / Font styles}
+    Jacquenetta 正文使用 \textbf{Helvetica}，中文使用 \textbf{思源黑体}，
+    数学公式使用 \textit{衬线字体}。
 
     \vspace{0.4cm}
     \begin{itemize}
-        \item Regular text for general content
-        \item \textbf{Bold text} for emphasis and headings
-        \item \textit{Italic text} for definitions or foreign terms
-        \item \texttt{Monospace} for code and technical identifiers
-        \item \alert{Alerted text} for drawing attention
+        \item 常规文本 / Regular text for general content
+        \item \textbf{粗体文本 / Bold text} for emphasis and headings
+        \item \textit{斜体文本 / Italic text} for definitions or foreign terms
+        \item \texttt{等宽字体 / Monospace} for code and technical identifiers
+        \item \alert{警示文本 / Alerted text} for drawing attention
     \end{itemize}
 
     \vspace{0.4cm}
-    {\footnotesize Footnote-sized text is also available for captions
-    and annotations.}
+    {\footnotesize 脚注大小文本也可用于说明和注释。/ Footnote-sized text is also available for captions and annotations.}
 \end{frame}
 
-\begin{frame}{Mathematics}
-    Jacquenetta preserves serif fonts in math mode for readability.
+\begin{frame}{数学公式 / Mathematics}
+    Jacquenetta 在数学模式下保留衬线字体以保证可读性。
 
     \vspace{0.2cm}
-    The posterior probability via Bayes' theorem:
+    通过贝叶斯定理得到后验概率：
     \[
         P(\theta \mid \mathcal{D}) =
         \frac{P(\mathcal{D} \mid \theta)\, P(\theta)}
              {P(\mathcal{D})}
     \]
 
-    An inline example: given $n$ samples, the MLE is
-    $\hat{\theta} = \arg\max_\theta \mathcal{L}(\theta; x_1, \dots, x_n)$.
-
-    \vspace{0.2cm}
-    Multi-line alignment:
-    \begin{align}
-        \mathcal{L}(\theta)
-            &= \textstyle\sum_{i=1}^{n} \log p(x_i \mid \theta)
-        &
-        \nabla_\theta \mathcal{L}
-            &= \textstyle\sum_{i=1}^{n}
-                \nabla_\theta \log p(x_i \mid \theta)
-    \end{align}
+    给定 $n$ 个样本，最大似然估计为
+    $\hat{\theta} = \arg\max_\theta \mathcal{L}(\theta; x_1, \dots, x_n)$。
 \end{frame}
 
 % ============================================================
-\section{Elements}
+\section{元素 / Elements}
 % ============================================================
 
-\sectionframe{02}{Elements}
+\sectionframe{02}{元素 Elements}
 
-\begin{frame}{Lists}
+\begin{frame}{列表 / Lists}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
-            \textbf{Itemize}
+            \textbf{项目列表 / Itemize}
             \begin{itemize}
-                \item First level item
-                \item Another item
+                \item 第一层 / First level
+                \item 另一项 / Another item
                     \begin{itemize}
-                        \item Second level
-                        \item Nested item
+                        \item 第二层 / Second level
+                        \item 嵌套项 / Nested item
                     \end{itemize}
-                \item Back to first level
+                \item 回到第一层 / Back to first level
             \end{itemize}
         \end{column}
 
         \begin{column}{0.45\textwidth}
-            \textbf{Enumerate}
+            \textbf{编号列表 / Enumerate}
             \begin{enumerate}
-                \item First step
-                \item Second step
+                \item 第一步 / First step
+                \item 第二步 / Second step
                     \begin{enumerate}
-                        \item Sub-step A
-                        \item Sub-step B
+                        \item 子步骤 A / Sub-step A
+                        \item 子步骤 B / Sub-step B
                     \end{enumerate}
-                \item Third step
+                \item 第三步 / Third step
             \end{enumerate}
         \end{column}
     \end{columns}
 
     \vspace{0.4cm}
-    \textbf{Description}
+    \textbf{描述列表 / Description}
     \begin{description}
-        \item[Precision] Fraction of true positives among predicted positives.
-        \item[Recall] Fraction of true positives among actual positives.
+        \item[精确率 / Precision] 预测为正例中真正例的比例。
+        \item[召回率 / Recall] 实际正例中被正确预测的比例。
     \end{description}
 \end{frame}
 
-\begin{frame}{Blocks}
-    All blocks share a unified left-border style, distinguished by color.
+\begin{frame}{块环境 / Blocks}
+    所有块环境都使用统一的左边框视觉语言，通过颜色区分。
 
-    \begin{block}{Default block}
-        Used for general information, definitions, or neutral content.
+    \begin{block}{默认块 / Default block}
+        用于一般信息、定义或中性内容。
     \end{block}
 
-    \begin{alertblock}{Alert block}
-        Used to highlight warnings, caveats, or important remarks.
+    \begin{alertblock}{警示块 / Alert block}
+        用于强调警告、注意事项或重要提示。
     \end{alertblock}
 
-    \begin{exampleblock}{Example block}
-        Used for examples, demonstrations, or supporting evidence.
+    \begin{exampleblock}{示例块 / Example block}
+        用于示例、演示或支持性证据。
     \end{exampleblock}
 \end{frame}
 
-\begin{frame}{Custom environments}
-    \begin{problock}{Problock --- callout with accent border}
-        Ideal for theorems, definitions, or key takeaways.
-        For any events $A$ and $B$ with $P(B) > 0$:\;
+\begin{frame}{自定义环境 / Custom environments}
+    \begin{problock}{Problock --- 强调色边框标注}
+        适用于定理、定义或关键结论。
+        对任意事件 $A$ 和 $B$ 且 $P(B) > 0$:\;
         $P(A \mid B) = {P(B \mid A)\, P(A)}/{P(B)}$
     \end{problock}
 
     \begin{highlightbox}
-        \textbf{Highlightbox} --- an orange callout for observations,
-        warnings, or results that need to stand out.
+        \textbf{Highlightbox} --- 橙色高亮标注，用于需要突出的观察、警告或结果。
     \end{highlightbox}
-
-    \vspace{0.2cm}
-    Both use the same left-border language as standard blocks,
-    but with tcolorbox for richer content (math, nested lists, etc.).
 \end{frame}
 
-\begin{frame}{Tables}
-    Use \texttt{booktabs} for clean, professional tables.
+\begin{frame}{表格 / Tables}
+    使用 \texttt{booktabs} 制作简洁专业的表格。
 
     \vspace{0.4cm}
     \centering
     \begin{tabular}{lccc}
         \toprule
-        \textbf{Model} & \textbf{Accuracy} & \textbf{F1 Score} &
-        \textbf{Time (s)} \\
+        \textbf{模型} & \textbf{准确率} & \textbf{F1 分数} & \textbf{时间（秒）} \\
         \midrule
-        Logistic Regression & 0.89 & 0.87 & 0.3 \\
-        Random Forest       & 0.93 & 0.91 & 2.1 \\
-        Neural Network      & 0.95 & 0.94 & 15.7 \\
-        \textbf{Ensemble}   & \textbf{0.96} & \textbf{0.95} & 18.1 \\
+        逻辑回归 & 0.89 & 0.87 & 0.3 \\
+        随机森林 & 0.93 & 0.91 & 2.1 \\
+        神经网络 & 0.95 & 0.94 & 15.7 \\
+        \textbf{集成} & \textbf{0.96} & \textbf{0.95} & 18.1 \\
         \bottomrule
     \end{tabular}
 \end{frame}
 
-\begin{frame}{Columns}
+\begin{frame}{分栏 / Columns}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{problock}{Left column}
-                Columns are useful for placing text and figures
-                side by side, or for comparing two approaches.
+            \begin{problock}{左栏 / Left column}
+                分栏适合将文本与图形并排放置，或用于对比两种方法。
             \end{problock}
 
             \vspace{0.2cm}
-            Key advantages:
+            主要优势：
             \begin{itemize}
-                \item Better use of slide space
-                \item Visual separation of ideas
-                \item Natural comparison layout
+                \item 更好地利用幻灯片空间
+                \item 自然地分隔不同观点
+                \item 便于直观对比
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \begin{problock}{Right column}
-                You can mix any content: text, math, figures,
-                tables, or code listings.
+            \begin{problock}{右栏 / Right column}
+                你可以混合任何内容：文本、数学、图形、表格或代码列表。
             \end{problock}
 
             \vspace{0.2cm}
-            A quick formula:
+            一个快速公式：
             \[
                 \text{ELBO} = \mathbb{E}_{q}[\log p(x \mid z)]
                 - D_{\text{KL}}(q \| p)
@@ -255,13 +229,13 @@
 \end{frame}
 
 % ============================================================
-\section{Colors}
+\section{颜色 / Colors}
 % ============================================================
 
-\sectionframe{03}{Colors}
+\sectionframe{03}{颜色 Colors}
 
-\begin{frame}{Color palette}
-    Jacquenetta defines four theme colors:
+\begin{frame}{调色板 / Color palette}
+    Jacquenetta 定义了四种主题颜色 / Jacquenetta defines four theme colors:
 
     \vspace{0.4cm}
     \begin{columns}[T]
@@ -269,7 +243,7 @@
             \centering
             \begin{tikzpicture}
                 \fill[jqdark] (0,0) rectangle (2.5,1.5);
-                \node[white] at (1.25,0.75) {\textbf{Dark}};
+                \node[white] at (1.25,0.75) {\textbf{深色 / Dark}};
             \end{tikzpicture}\\[4pt]
             {\small\texttt{\#121212}}
         \end{column}
@@ -277,7 +251,7 @@
             \centering
             \begin{tikzpicture}
                 \fill[jqgray] (0,0) rectangle (2.5,1.5);
-                \node[white] at (1.25,0.75) {\textbf{Gray}};
+                \node[white] at (1.25,0.75) {\textbf{灰色 / Gray}};
             \end{tikzpicture}\\[4pt]
             {\small\texttt{\#757575}}
         \end{column}
@@ -285,7 +259,7 @@
             \centering
             \begin{tikzpicture}
                 \fill[jqblue] (0,0) rectangle (2.5,1.5);
-                \node[white] at (1.25,0.75) {\textbf{Blue}};
+                \node[white] at (1.25,0.75) {\textbf{蓝色 / Blue}};
             \end{tikzpicture}\\[4pt]
             {\small\texttt{\#4A90E2}}
         \end{column}
@@ -293,47 +267,46 @@
             \centering
             \begin{tikzpicture}
                 \fill[jqorange] (0,0) rectangle (2.5,1.5);
-                \node[white] at (1.25,0.75) {\textbf{Orange}};
+                \node[white] at (1.25,0.75) {\textbf{橙色 / Orange}};
             \end{tikzpicture}\\[4pt]
             {\small\texttt{\#E67E22}}
         \end{column}
     \end{columns}
 
     \vspace{0.6cm}
-    Use them directly: \texttt{\textbackslash color\{jqblue\}} or
-    \texttt{\textbackslash textcolor\{jqorange\}\{...\}}.
+    直接使用 / Use them directly: \texttt{\textbackslash color\{jqblue\}} or
+    \texttt{\textbackslash textcolor\{jqorange\}\{...\}}。
 
     \vspace{0.2cm}
-    The \textbf{accent} color (default: {\color{jqaccent}blue})
-    controls the \texttt{problock} border and standard block titles.
+    \textbf{强调色 / Accent} color（默认 / default: {\color{jqaccent}blue}）
+    控制 / controls the \texttt{problock} border and standard block titles.
 \end{frame}
 
 % ============================================================
-\section{Conclusion}
+\section{总结 / Conclusion}
 % ============================================================
 
-\sectionframe{04}{Conclusion}
+\sectionframe{04}{总结 Conclusion}
 
-\begin{frame}{Summary}
-    \begin{problock}{Jacquenetta at a glance}
+\begin{frame}{总结 / Summary}
+    \begin{problock}{Jacquenetta 一览 / Jacquenetta at a glance}
         \begin{itemize}
-            \item Minimalist design with a signature dark border
-            \item Clean typography: Helvetica body, serif math
-            \item Custom environments: \texttt{problock} and
-                  \texttt{highlightbox}
-            \item Section dividers with \texttt{\textbackslash sectionframe}
-            \item Configurable accent color and optional border
+            \item 极简设计搭配签名深色边框 / Minimalist design with a signature dark border
+            \item 干净排版：英文 Helvetica、中文思源黑体、数学衬线 / Clean typography
+            \item 自定义环境：\texttt{problock} 和 \texttt{highlightbox}
+            \item 使用 \texttt{\textbackslash sectionframe} 的分节页 / Section dividers
+            \item 可配置的强调色和可选边框 / Configurable accent color and optional border
         \end{itemize}
     \end{problock}
 
     \vspace{0.3cm}
     \begin{highlightbox}
         \centering
-        \textbf{Get started:}\quad
-        \texttt{\textbackslash usetheme\{Jacquenetta\}}
+        \textbf{开始使用 / Get started:}\quad
+        \texttt{\textbackslash usetheme[chinese]\{Jacquenetta\}}
     \end{highlightbox}
 \end{frame}
 
-\thanksframe
+\thanksframe[谢谢观看 / Thank you.]
 
 \end{document}

@@ -12,6 +12,7 @@
 %   accent=<color>   Change the accent color (default: jq@blue)
 %                    e.g. accent=jq@orange, accent=teal
 %   noborder         Disable the signature dark border
+%   chinese          Enable CJK support for Chinese (XeLaTeX/LuaLaTeX)
 %
 % Dependencies: tikz, tcolorbox, helvet, microtype, setspace
 % ----------------------------------------------------------
@@ -26,6 +27,8 @@
   \PassOptionsToPackage{accent=#1}{beamercolorthemeJacquenetta}}
 \DeclareOptionBeamer{noborder}{%
   \PassOptionsToPackage{noborder}{beamerouterthemeJacquenetta}}
+\DeclareOptionBeamer{chinese}{%
+  \PassOptionsToPackage{chinese}{beamerfontthemeJacquenetta}}
 \ProcessOptionsBeamer
 
 % === Required packages =========================================

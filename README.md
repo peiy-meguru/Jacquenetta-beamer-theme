@@ -2,7 +2,7 @@
 
 # Jacquenetta
 
-**A modern, minimalist Beamer theme for scientific presentations**
+**适用于学术演示的现代化极简 Beamer 主题**
 
 `\usetheme{Jacquenetta}`
 
@@ -26,137 +26,169 @@
 
 ---
 
-Jacquenetta is a clean, opinionated Beamer theme built for scientific talks in AI, ML, statistics, and related fields. Inspired by the Jacquenetta Google Slides aesthetic. No clutter, no navigation bars, just your content with a strong visual identity.
+Jacquenetta 是一款简洁、有态度的 Beamer 主题，专为 AI、机器学习、统计学等领域的学术演讲设计。灵感来自 Jacquenetta 风格的 Google Slides。没有多余元素，没有导航栏，只保留你的内容，同时呈现强烈的视觉识别度。
 
-## Highlights
+## 亮点
 
-- **Signature border** — thick dark frame on every slide, toggleable with `noborder`
-- **Unified callout system** — every block type (standard, alert, example, problock, highlightbox) shares the same left-border language
-- **Section dividers** — dark `\sectionframe` with large ghost number
-- **Accent color** — fully configurable with any xcolor name
-- **Serif math** — Helvetica body, Computer Modern for equations
-- **X/N footer** — page count bottom-right, nothing else
+- **签名边框** —— 每张幻灯片都有粗重的深色边框，可用 `noborder` 关闭
+- **统一标注系统** —— 标准块、警示块、示例块、problock、highlightbox 共享相同的左边框语言
+- **分节页** —— 深色 `\sectionframe`，配有大号幽灵数字
+- **强调色** —— 支持任意 xcolor 名称，完全可配置
+- **衬线数学** —— 正文使用 Helvetica / TeX Gyre Heros，公式使用 Computer Modern
+- **X/N 页脚** —— 右下角仅显示页码，无其他干扰
 
-## Installation
+## 更新内容
 
-Copy the five `.sty` files from `src/` into your project directory:
+- **新增中文支持**：`chinese` 选项可一键启用中文，自动加载 `ctex` 并设置 CJK 字体
+- **中英混排示例**：`example/example.tex` 已更新为中英双语示例，可直接使用
+- **英文回退 Helvetica**：在 XeLaTeX/LuaLaTeX 下通过 `TeX Gyre Heros` 保持英文 Helvetica 风格
+- **简化构建**：`make example` 默认使用 `xelatex`，无需单独的中文编译目标
+
+## 安装
+
+将 `src/` 中的五个 `.sty` 文件复制到你的项目目录：
 
 ```bash
 cp src/*.sty /path/to/your/project/
 ```
 
-Or install system-wide:
+或系统全局安装：
 
 ```bash
-make install   # copies to ~/texmf/tex/latex/jacquenetta/
+make install   # 复制到 ~/texmf/tex/latex/jacquenetta/
 ```
 
-## Quick start
+## 快速入门
+
+### 1. 最简单的中英混用幻灯片
 
 ```latex
 \documentclass[aspectratio=169]{beamer}
-\usetheme{Jacquenetta}
+\usetheme[chinese]{Jacquenetta}
 
-\title{Your Title}
-\subtitle{Your Subtitle}
-\author{Your Name}
-\institute{Your Institution}
+\title{你的标题}
+\subtitle{Your Subtitle / 你的副标题}
+\author{你的名字 / Your Name}
+\institute{你的机构 / Your Institution}
 \date{\today}
 
 \begin{document}
 
 \titleframe
 
-\sectionframe{01}{Introduction}
-
-\begin{frame}{Your slide}
-  \begin{problock}{Key result}
-    Your content here.
-  \end{problock}
+\begin{frame}{幻灯片标题 / Slide Title}
+    这里是中文内容，and here is English content.
 \end{frame}
 
-\thanksframe
+\thanksframe[谢谢 / Thank you]
 
 \end{document}
 ```
 
+### 2. 编译命令
+
 ```bash
-pdflatex example.tex && pdflatex example.tex
+xelatex example.tex && xelatex example.tex
 ```
 
-## Theme options
+或使用 Makefile：
+
+```bash
+make example
+```
+
+> **注意**：中文支持需要 **XeLaTeX** 或 **LuaLaTeX**。`pdflatex` 无法直接编译中文内容。
+
+## 主题选项
 
 ```latex
-\usetheme[accent=jqorange]{Jacquenetta}   % orange accent
-\usetheme[noborder]{Jacquenetta}           % no signature border
+\usetheme[accent=jqorange]{Jacquenetta}   % 橙色强调色
+\usetheme[noborder]{Jacquenetta}           % 关闭签名边框
 \usetheme[accent=teal, noborder]{Jacquenetta}
 ```
 
-| Option | Description | Default |
+| 选项 | 说明 | 默认值 |
 |--------|-------------|---------|
-| `accent=<color>` | Any xcolor name or theme alias | `jqblue` |
-| `noborder` | Disable the signature dark border | off |
+| `accent=<颜色>` | 任意 xcolor 名称或主题别名 | `jqblue` |
+| `noborder` | 关闭签名边框 | 关闭 |
+| `chinese` | 启用中文 CJK 支持（XeLaTeX/LuaLaTeX） | 关闭 |
 
-## Institution logo
+## 中文支持
 
-Set a logo once in your preamble — it will appear automatically on the title page (bottom-right) and in the footer of every slide (bottom-left). If you don't set one, nothing changes.
+使用 `chinese` 选项即可启用中文支持。主题会自动加载 `ctex`，并设置：
+
+- **中文**：Noto Sans CJK SC / Source Han Sans（思源黑体）
+- **英文**：TeX Gyre Heros（Helvetica 克隆）
+- **数学**：保留 Computer Modern 衬线字体
+
+如需使用其他 CJK 字体，可在加载主题后覆盖：
+
+```latex
+\usetheme[chinese]{Jacquenetta}
+\setCJKmainfont{Source Han Sans SC}[AutoFakeSlant]
+\setCJKsansfont{Source Han Sans SC}[AutoFakeSlant]
+```
+
+## 机构 Logo
+
+在导言区设置一次 Logo，它会自动出现在标题页（右下角）和每张幻灯片的页脚（左下角）。如果不设置，则不会显示任何内容。
 
 ```latex
 \logo{\includegraphics[height=0.7cm]{logo.png}}
 ```
 
-To show the logo only on the title page (not in the footer), clear it after `\titleframe`:
+若只想在标题页显示 Logo（不在页脚显示），在 `\titleframe` 后清空它：
 
 ```latex
 \titleframe
-\logo{}   % remove from footer slides
+\logo{}   % 从正文页脚中移除 logo
 ```
 
-## Commands
+## 命令
 
-| Command | Description |
+| 命令 | 说明 |
 |---------|-------------|
-| `\titleframe` | Title page (no border) with accent separator |
-| `\thanksframe` | Dark closing slide — "Thank you." |
-| `\thanksframe[Your text]` | Dark closing slide with custom text |
-| `\sectionframe{N}{Title}` | Dark section divider with ghost number |
+| `\titleframe` | 标题页（无边框），带强调色分隔线 |
+| `\thanksframe` | 深色结束页 —— "Thank you." |
+| `\thanksframe[你的文字]` | 自定义文字的深色结束页 |
+| `\sectionframe{N}{标题}` | 深色分节页，带幽灵数字 |
 
-## Environments
+## 环境
 
-All environments use the same left-border visual language.
+所有环境都使用统一的左边框视觉语言。
 
 ```latex
-% Standard Beamer blocks — safe inside [fragile] frames
-\begin{block}{Title}         % accent border
-\begin{alertblock}{Title}    % orange border
-\begin{exampleblock}{Title}  % green border
+% 标准 Beamer 块 —— 可在 [fragile] 帧中使用
+\begin{block}{标题}         % 强调色边框
+\begin{alertblock}{标题}    % 橙色边框
+\begin{exampleblock}{标题}  % 绿色边框
 
-% Custom environments — require tcolorbox, avoid in [fragile] frames
-\begin{problock}{Title}      % accent border, richer content
-\begin{highlightbox}         % orange border, no title
+% 自定义环境 —— 依赖 tcolorbox，避免在 [fragile] 帧中使用
+\begin{problock}{标题}      % 强调色边框，更丰富的内容
+\begin{highlightbox}         % 橙色边框，无标题
 ```
 
-## Color palette
+## 调色板
 
-| Alias | Hex | Role |
+| 别名 | Hex | 作用 |
 |-------|-----|------|
-| `jqdark` | `#121212` | Text, border, dark backgrounds |
-| `jqgray` | `#757575` | Subtitles, annotations |
-| `jqblue` | `#4A90E2` | Default accent |
-| `jqorange` | `#E67E22` | Alerts, highlightbox |
-| `jqgreen` | `#27AE60` | Example blocks |
-| `jqaccent` | — | Alias for the current accent color |
+| `jqdark` | `#121212` | 文本、边框、深色背景 |
+| `jqgray` | `#757575` | 副标题、注释 |
+| `jqblue` | `#4A90E2` | 默认强调色 |
+| `jqorange` | `#E67E22` | 警示、高亮框 |
+| `jqgreen` | `#27AE60` | 示例块 |
+| `jqaccent` | — | 当前强调色别名 |
 
-Use anywhere: `\textcolor{jqorange}{...}` · `\color{jqaccent}`
+任意位置可用：`	extcolor{jqorange}{...}` · `	extcolor{jqaccent}{...}`
 
-## Requirements
+## 需求
 
-Standard TeX Live 2020+ or MiKTeX 24+ installation. Required packages: `tikz`, `tcolorbox` (skins library), `helvet`, `microtype`, `setspace` — all included in a default distribution.
+标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex` —— 默认发行版均已包含。
 
-## License
+## 许可
 
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+本作品采用 [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) 许可。
 
-You are free to use, adapt, and redistribute this theme — including for commercial purposes — as long as you credit the original author and share any modifications under the same license.
+你可以自由使用、修改和再分发本主题 —— 包括商业用途 —— 只要你署名原作者，并以相同许可分享修改版本。
 
 2026 Samuel Manchajm

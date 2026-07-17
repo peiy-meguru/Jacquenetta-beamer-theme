@@ -13,6 +13,34 @@
 \RequirePackage{helvet}
 \RequirePackage{setspace}
 
+% === Chinese support ===========================================
+\newif\ifjq@chinese
+\jq@chinesefalse
+\DeclareOptionBeamer{chinese}{\jq@chinesetrue}
+\ProcessOptionsBeamer
+
+\ifjq@chinese
+  \RequirePackage{iftex}
+  \ifXeTeX\else\ifLuaTeX\else
+    \PackageError{beamerfontthemeJacquenetta}{%
+      The `chinese' theme option requires XeLaTeX or LuaLaTeX.%
+    }{Use xelatex or lualatex to compile this document.}
+  \fi\fi
+  \RequirePackage{ctex}
+  \setCJKmainfont{Noto Sans CJK SC}[AutoFakeSlant]
+  \setCJKsansfont{Noto Sans CJK SC}[AutoFakeSlant]
+  % Use TeX Gyre Heros (Helvetica clone) for Latin text under fontspec,
+  % since ctex/fontspec override the helvet NFSS setup.
+  \IfFontExistsTF{TeX Gyre Heros}{%
+    \setsansfont{TeX Gyre Heros}%
+  }{%
+    \setsansfont{texgyreheros-regular.otf}[%
+      BoldFont=texgyreheros-bold.otf,
+      ItalicFont=texgyreheros-italic.otf,
+      BoldItalicFont=texgyreheros-bolditalic.otf]%
+  }
+\fi
+
 % Sans-serif by default, serif for math only
 \renewcommand{\familydefault}{\sfdefault}
 \usefonttheme[onlymath]{serif}
