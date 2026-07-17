@@ -126,6 +126,9 @@
 % === \jqnode =========================================================
 % Usage: \jqnode[<options>]{<type>}{<id>}{<text>}{<relative position>}
 \newcommand{\jqnode}[5][]{%
+  \ifcsname jq#2\endcsname\else
+    \PackageWarning{beamerinnerthemeJacquenetta-flowchart}{Unknown node type '#2'. Known types: terminator, process, decision, io, subprocess}%
+  \fi
   \node[jq#2, #1, #5] (#3) {#4};%
 }
 
@@ -165,6 +168,7 @@
   \ifcsname jq@branch@#5\endcsname
     \csname jq@branch@#5\endcsname[#1]{#2}{#3}{#4}{#5}%
   \else
+    \PackageWarning{beamerinnerthemeJacquenetta-flowchart}{Unknown branch direction '#5'. Using horizontal fallback. Supported: left, right, above, below}%
     \jqbranch@h[#1]{#2}{#3}{#4}{#5}%
   \fi
 }
