@@ -274,7 +274,7 @@ criterion = nn.MSELoss()
 \sectionframe{03}{流程图 Flowcharts}
 
 \begin{frame}{训练流程 / Training pipeline}
-\begin{jqflowchart}[node distance=1.3cm and 2.0cm]
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
   \jqnode{terminator}{start}{开始 / Start}{}
   \jqnode{io}{load}{加载数据 / Load data}{below=of start}
   \jqedge{start}{load}{}
@@ -283,7 +283,7 @@ criterion = nn.MSELoss()
   \jqnode{decision}{split}{数据足够？}{below=of pre}
   \jqedge{pre}{split}{}
   \jqnode{process}{train}{训练模型 / Train}{below=of split}
-  \jqbranch{split}{train}{是}{right}
+  \jqbranch{split}{train}{是}{below}
   \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
   \jqbranch{split}{collect}{否}{right}
   \jqnode{terminator}{end}{结束 / End}{below=of train}
@@ -292,7 +292,7 @@ criterion = nn.MSELoss()
 \end{frame}
 
 \begin{frame}{模型推断 / Inference}
-\begin{jqflowchart}[node distance=1.4cm and 2.4cm]
+\begin{jqflowchart}[scale=0.85, transform shape, node distance=1.19cm and 2.04cm]
   \jqnode{terminator}{in}{输入样本 / Input}{}
   \jqnode{subprocess}{model}{模型前向 / Forward pass}{right=of in}
   \jqedge{in}{model}{}

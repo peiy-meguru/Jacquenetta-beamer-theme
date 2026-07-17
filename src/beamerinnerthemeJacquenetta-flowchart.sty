@@ -76,8 +76,10 @@
 % === Direction helpers ===============================================
 % The public \jqbranch command accepts direction keywords (left, right,
 % above, below).  These lookup tables map those keywords to the
-% corresponding TikZ compass anchors and to the anchor on the opposite
-% side used for edge labels.
+% corresponding TikZ compass anchors, to the anchor on the opposite
+% side used for edge labels, to the target anchor that the orthogonal
+% path should terminate on, and to the appropriate orthogonal path
+% operator (-| for horizontal branches, |- for vertical ones).
 \expandafter\def\csname jq@anchor@left\endcsname{west}
 \expandafter\def\csname jq@anchor@right\endcsname{east}
 \expandafter\def\csname jq@anchor@above\endcsname{north}
@@ -86,6 +88,14 @@
 \expandafter\def\csname jq@oppanchor@right\endcsname{west}
 \expandafter\def\csname jq@oppanchor@above\endcsname{south}
 \expandafter\def\csname jq@oppanchor@below\endcsname{north}
+\expandafter\def\csname jq@targetanchor@left\endcsname{east}
+\expandafter\def\csname jq@targetanchor@right\endcsname{west}
+\expandafter\def\csname jq@targetanchor@above\endcsname{south}
+\expandafter\def\csname jq@targetanchor@below\endcsname{north}
+\expandafter\def\csname jq@branch@left\endcsname{\jqbranch@h}
+\expandafter\def\csname jq@branch@right\endcsname{\jqbranch@h}
+\expandafter\def\csname jq@branch@above\endcsname{\jqbranch@v}
+\expandafter\def\csname jq@branch@below\endcsname{\jqbranch@v}
 \newcommand{\jqtoanchor}[1]{%
   \ifcsname jq@anchor@#1\endcsname
     \csname jq@anchor@#1\endcsname
@@ -96,6 +106,13 @@
 \newcommand{\jqtooppanchor}[1]{%
   \ifcsname jq@oppanchor@#1\endcsname
     \csname jq@oppanchor@#1\endcsname
+  \else
+    #1%
+  \fi
+}
+\newcommand{\jqtotargetanchor}[1]{%
+  \ifcsname jq@targetanchor@#1\endcsname
+    \csname jq@targetanchor@#1\endcsname
   \else
     #1%
   \fi
@@ -123,10 +140,23 @@
 % === \jqbranch =======================================================
 % Usage: \jqbranch[<options>]{<from>}{<to>}{<label>}{<direction>}
 % <direction> should be a direction keyword such as left, right, above,
-% or below.  It is mapped to the corresponding node anchor and to the
-% opposite-side anchor used for the label.
+% or below.  It is mapped to the corresponding node anchor, to the
+% opposite-side anchor used for the label, and to the target border
+% anchor and orthogonal path operator appropriate for that direction.
+% Drawing to the target's border anchor avoids PGF warnings on
+% non-rectangular nodes (e.g. diamonds) and keeps arrowheads aligned.
+\newcommand{\jqbranch@h}[5][]{%
+  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.75, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+}
+\newcommand{\jqbranch@v}[5][]{%
+  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) |- node[pos=0.75, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+}
 \newcommand{\jqbranch}[5][]{%
-  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.75, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3);%
+  \ifcsname jq@branch@#5\endcsname
+    \csname jq@branch@#5\endcsname[#1]{#2}{#3}{#4}{#5}%
+  \else
+    \jqbranch@h[#1]{#2}{#3}{#4}{#5}%
+  \fi
 }
 
 \mode<all>
