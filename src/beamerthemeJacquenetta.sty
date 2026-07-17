@@ -14,10 +14,12 @@
 %   noborder         Disable the signature dark border
 %   chinese          Enable CJK support for Chinese (XeLaTeX/LuaLaTeX)
 %   code             Enable code environment support
+%   flowchart        Enable flowchart environment support
 %
 % Dependencies: tikz, tcolorbox, listings (with `code` option), etoolbox (CJK
-% fixes), helvet, microtype, setspace. The `mwe` package is only needed for the
-% example-image placeholder in example.tex.
+% fixes), helvet, microtype, setspace. With `flowchart`: tikz libraries
+% shapes.geometric, positioning, arrows.meta. The `mwe` package is only needed
+% for the example-image placeholder in example.tex.
 % ----------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerthemeJacquenetta}%
@@ -30,6 +32,8 @@
 \jq@chinesefalse
 \newif\ifjq@code
 \jq@codefalse
+\newif\ifjq@flowchart
+\jq@flowchartfalse
 \DeclareOptionBeamer{accent}{%
   \PassOptionsToPackage{accent=#1}{beamercolorthemeJacquenetta}}
 \DeclareOptionBeamer{noborder}{%
@@ -38,6 +42,7 @@
   \PassOptionsToPackage{chinese}{beamerfontthemeJacquenetta}%
   \jq@chinesetrue}
 \DeclareOptionBeamer{code}{\jq@codetrue}
+\DeclareOptionBeamer{flowchart}{\jq@flowcharttrue}
 \ProcessOptionsBeamer
 
 % === Required packages =========================================
@@ -56,6 +61,9 @@
 \fi
 \ifjq@code
   \useinnertheme{Jacquenetta-code}
+\fi
+\ifjq@flowchart
+  \useinnertheme{Jacquenetta-flowchart}
 \fi
 \useoutertheme{Jacquenetta}
 
