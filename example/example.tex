@@ -299,9 +299,9 @@ criterion = nn.MSELoss()
   \jqnode{decision}{thresh}{置信度 > 0.5？}{right=of model}
   \jqedge{model}{thresh}{}
   \jqnode{process}{pos}{正例 / Positive}{below=of thresh}
-  \jqbranch{thresh}{pos}{Yes}{left}
+  \jqbranch{thresh}{pos}{Yes}{below}
   \jqnode{process}{neg}{负例 / Negative}{above=of thresh}
-  \jqbranch{thresh}{neg}{No}{right}
+  \jqbranch{thresh}{neg}{No}{above}
 \end{jqflowchart}
 \end{frame}
 
