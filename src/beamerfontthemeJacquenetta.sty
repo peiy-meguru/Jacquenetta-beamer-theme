@@ -27,8 +27,9 @@
     }{Use xelatex or lualatex to compile this document.}
   \fi\fi
   \RequirePackage{ctex}
-  \setCJKmainfont{Noto Sans CJK SC}[AutoFakeSlant]
-  \setCJKsansfont{Noto Sans CJK SC}[AutoFakeSlant]
+  \setCJKmainfont{Noto Sans CJK SC}[AutoFakeSlant, Scale=0.95]
+  \setCJKsansfont{Noto Sans CJK SC}[AutoFakeSlant, Scale=0.95]
+  \setCJKmonofont{Noto Sans CJK SC}[AutoFakeSlant, Scale=0.9]
   % Use TeX Gyre Heros (Helvetica clone) for Latin text under fontspec,
   % since ctex/fontspec override the helvet NFSS setup.
   \IfFontExistsTF{TeX Gyre Heros}{%
@@ -38,6 +39,25 @@
       BoldFont=texgyreheros-bold.otf,
       ItalicFont=texgyreheros-italic.otf,
       BoldItalicFont=texgyreheros-bolditalic.otf]%
+  }
+  % Predefine monospace font for listings and \texttt,
+  % prefer DejaVu Sans Mono, fall back to Latin Modern Mono.
+  \IfFontExistsTF{DejaVu Sans Mono}{%
+    \newfontfamily\jq@monofont{DejaVu Sans Mono}[
+      Scale=0.9,
+      BoldFont=DejaVu Sans Mono Bold,
+      SlantedFont=DejaVu Sans Mono Oblique
+    ]%
+  }{%
+    \IfFontExistsTF{Latin Modern Mono}{%
+      \newfontfamily\jq@monofont{Latin Modern Mono}[Scale=0.9]%
+    }{%
+      \newfontfamily\jq@monofont{lmmono10-regular.otf}[
+        Scale=0.9,
+        BoldFont=lmmonolt10-bold.otf,
+        SlantedFont=lmmono10-italic.otf
+      ]%
+    }%
   }
 \fi
 

@@ -1,8 +1,9 @@
 \documentclass[aspectratio=169]{beamer}
-\usetheme[chinese]{Jacquenetta}
+\usetheme[chinese, code, flowchart]{Jacquenetta}
 
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
+\usepackage{mwe}   % Provides example-image placeholder for logo
 
 \title{Jacquenetta}
 \subtitle{A modern Beamer theme for scientific presentations\\适用于学术演示的现代化极简主题}
@@ -10,13 +11,9 @@
 \institute{GitHub --- Jacquenetta-beamer-theme}
 \date{\today}
 
-\logo{%
-  \colorbox{jqdark}{%
-    \textcolor{white}{%
-      \fontsize{6}{7}\selectfont\bfseries\quad MY INSTITUTION \quad 我的机构\quad%
-    }%
-  }%
-}
+% Logo placeholder: use an image logo in real documents.
+% Text in \logo is evaluated before fonts are ready and may cause nullfont warnings.
+\logo{\includegraphics[height=0.7cm]{example-image}}
 
 \begin{document}
 
@@ -229,10 +226,90 @@
 \end{frame}
 
 % ============================================================
+\section{代码 / Code}
+% ============================================================
+
+\sectionframe{03}{代码 Code}
+
+\begin{frame}[fragile]{代码片段 / Code snippet}
+    \begin{jqcodebox}[language=Python, title=训练循环 / Training loop]
+for epoch in range(num_epochs):
+    model.train()
+    for batch in train_loader:
+        optimizer.zero_grad()
+        loss = criterion(model(batch.x), batch.y)
+        loss.backward()
+        optimizer.step()
+    \end{jqcodebox}
+\end{frame}
+
+\begin{frame}[fragile]{代码切片 / Code slices}
+    \begin{jqlisting}[language=Python, firstline=1, lastline=8, title=Part 1: 导入]
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = nn.Linear(10, 1)
+    \end{jqlisting}
+\end{frame}
+
+\begin{frame}[fragile]{代码切片 / Code slices (continued)}
+    \begin{jqlisting}[language=Python, firstline=1, lastline=6, firstnumber=9, title=Part 2: 训练]
+    def forward(self, x):
+        return self.fc(x)
+
+model = Net()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+criterion = nn.MSELoss()
+    \end{jqlisting}
+\end{frame}
+
+% ============================================================
+\section{流程图 / Flowcharts}
+% ============================================================
+
+\sectionframe{04}{流程图 Flowcharts}
+
+\begin{frame}{训练流程 / Training pipeline}
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
+  \jqnode{terminator}{start}{开始 / Start}{}
+  \jqnode{io}{load}{加载数据 / Load data}{below=of start}
+  \jqedge{start}{load}{}
+  \jqnode{process}{pre}{预处理 / Preprocess}{below=of load}
+  \jqedge{load}{pre}{}
+  \jqnode{decision}{split}{数据足够？}{below=of pre}
+  \jqedge{pre}{split}{}
+  \jqnode{process}{train}{训练模型 / Train}{below=of split}
+  \jqbranch{split}{train}{是}{below}
+  \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
+  \jqbranch{split}{collect}{否}{right}
+  \jqnode{terminator}{end}{结束 / End}{below=of train}
+  \jqedge{train}{end}{}
+\end{jqflowchart}
+\end{frame}
+
+\begin{frame}{模型推断 / Inference}
+\begin{jqflowchart}[scale=0.85, transform shape, node distance=1.2cm and 2.0cm]
+  \jqnode{terminator}{in}{输入样本 / Input}{}
+  \jqnode{subprocess}{model}{模型前向 / Forward pass}{right=of in}
+  \jqedge{in}{model}{}
+  \jqnode{decision}{thresh}{置信度 > 0.5？}{right=of model}
+  \jqedge{model}{thresh}{}
+  \jqnode{process}{pos}{正例 / Positive}{below=of thresh}
+  \jqbranch{thresh}{pos}{Yes}{below}
+  \jqnode{process}{neg}{负例 / Negative}{above=of thresh}
+  \jqbranch{thresh}{neg}{No}{above}
+\end{jqflowchart}
+\end{frame}
+
+% ============================================================
 \section{颜色 / Colors}
 % ============================================================
 
-\sectionframe{03}{颜色 Colors}
+\sectionframe{05}{颜色 Colors}
 
 \begin{frame}{调色板 / Color palette}
     Jacquenetta 定义了四种主题颜色 / Jacquenetta defines four theme colors:
@@ -286,7 +363,7 @@
 \section{总结 / Conclusion}
 % ============================================================
 
-\sectionframe{04}{总结 Conclusion}
+\sectionframe{06}{总结 Conclusion}
 
 \begin{frame}{总结 / Summary}
     \begin{problock}{Jacquenetta 一览 / Jacquenetta at a glance}

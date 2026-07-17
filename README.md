@@ -43,10 +43,12 @@ Jacquenetta 是一款简洁、有态度的 Beamer 主题，专为 AI、机器学
 - **中英混排示例**：`example/example.tex` 已更新为中英双语示例，可直接使用
 - **英文回退 Helvetica**：在 XeLaTeX/LuaLaTeX 下通过 `TeX Gyre Heros` 保持英文 Helvetica 风格
 - **简化构建**：`make example` 默认使用 `xelatex`，无需单独的中文编译目标
+- **代码环境**：`code` 选项提供 `jqlisting` 与 `jqcodebox` 代码环境
+- **流程图支持**：`flowchart` 选项提供 `jqflowchart` 环境与 `\jqnode`、`\jqedge`、`\jqbranch` 命令
 
 ## 安装
 
-将 `src/` 中的五个 `.sty` 文件复制到你的项目目录：
+将 `src/` 中的所有 `.sty` 文件复制到你的项目目录：
 
 ```bash
 cp src/*.sty /path/to/your/project/
@@ -99,6 +101,58 @@ make example
 
 > **注意**：中文支持需要 **XeLaTeX** 或 **LuaLaTeX**。`pdflatex` 无法直接编译中文内容。
 
+## 新功能速览
+
+Jacquenetta 现在支持代码高亮与流程图，均通过主题选项按需启用。
+
+### 代码高亮
+
+启用 `code` 选项，并在 `[fragile]` 帧中使用：
+
+```latex
+\usetheme[chinese, code]{Jacquenetta}
+
+\begin{frame}[fragile]{训练循环}
+\begin{jqcodebox}[language=Python, title=Training loop]
+for epoch in range(num_epochs):
+    model.train()
+    for batch in train_loader:
+        optimizer.zero_grad()
+        loss = criterion(model(batch.x), batch.y)
+        loss.backward()
+        optimizer.step()
+\end{jqcodebox}
+\end{frame}
+```
+
+### 流程图
+
+启用 `flowchart` 选项，使用 `jqflowchart` 环境与 `\jqnode` / `\jqedge` / `\jqbranch`：
+
+```latex
+\usetheme[chinese, flowchart]{Jacquenetta}
+
+\begin{frame}{训练流程}
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
+  \jqnode{terminator}{start}{开始}{}
+  \jqnode{process}{prep}{预处理}{below=of start}
+  \jqedge{start}{prep}{}
+  \jqnode{decision}{ok}{数据足够？}{below=of prep}
+  \jqedge{prep}{ok}{}
+  \jqnode{process}{train}{训练模型}{below=of ok}
+  \jqbranch{ok}{train}{是}{below}
+  \jqnode{process}{collect}{收集数据}{right=of ok}
+  \jqbranch{ok}{collect}{否}{right}
+\end{jqflowchart}
+\end{frame}
+```
+
+可同时启用 `chinese`、`code`、`flowchart`：
+
+```latex
+\usetheme[chinese, code, flowchart]{Jacquenetta}
+```
+
 ## 主题选项
 
 ```latex
@@ -112,6 +166,8 @@ make example
 | `accent=<颜色>` | 任意 xcolor 名称或主题别名 | `jqblue` |
 | `noborder` | 关闭签名边框 | 关闭 |
 | `chinese` | 启用中文 CJK 支持（XeLaTeX/LuaLaTeX） | 关闭 |
+| `code` | 启用 `jqlisting` 与 `jqcodebox` 代码环境 | 关闭 |
+| `flowchart` | 启用流程图环境 | 关闭 |
 
 ## 中文支持
 
@@ -136,6 +192,8 @@ make example
 ```latex
 \logo{\includegraphics[height=0.7cm]{logo.png}}
 ```
+
+> **注意**：避免在 `\logo{...}` 中使用文字（尤其是中文）。`\logo` 在导言区执行时字体尚未就绪，可能触发 `nullfont` 警告。建议始终使用图片 Logo。
 
 若只想在标题页显示 Logo（不在页脚显示），在 `\titleframe` 后清空它：
 
@@ -168,6 +226,70 @@ make example
 \begin{highlightbox}         % 橙色边框，无标题
 ```
 
+## 代码环境
+
+启用 `code` 选项后，可使用以下环境：
+
+```latex
+% 行内代码片段：带标题的高亮卡片
+\begin{jqcodebox}[language=Python, title=训练循环]
+for epoch in range(epochs):
+    ...
+\end{jqcodebox}
+
+% 跨帧讲解：按行号切片展示
+\begin{jqlisting}[language=Python, firstline=1, lastline=12]
+...
+\end{jqlisting}
+```
+
+- `jqcodebox` 基于 `tcolorbox` + `listings`，适合单帧内展示的代码片段。
+- `jqlisting` 基于 `listings`，适合把长代码切成多帧逐行讲解。
+- 使用 `\jqinputlisting[language=Python, firstline=1, lastline=20]{file.py}` 直接读取外部文件。
+- 包含代码环境的 `frame` 需要声明 `[fragile]`。
+
+## 流程图 / Flowcharts
+
+启用 `flowchart` 选项后，可以使用基于 TikZ 的流程图环境：
+
+```latex
+\usetheme[chinese, flowchart]{Jacquenetta}
+
+\begin{frame}{训练流程 / Training pipeline}
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
+  \jqnode{terminator}{start}{开始 / Start}{}
+  \jqnode{io}{load}{加载数据 / Load data}{below=of start}
+  \jqedge{start}{load}{}
+  \jqnode{process}{pre}{预处理 / Preprocess}{below=of load}
+  \jqedge{load}{pre}{}
+  \jqnode{decision}{split}{数据足够？}{below=of pre}
+  \jqedge{pre}{split}{}
+  \jqnode{process}{train}{训练模型 / Train}{below=of split}
+  \jqbranch{split}{train}{是}{below}
+  \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
+  \jqbranch{split}{collect}{否}{right}
+  \jqnode{terminator}{end}{结束 / End}{below=of train}
+  \jqedge{train}{end}{}
+\end{jqflowchart}
+\end{frame}
+```
+
+节点类型：`terminator`（开始/结束）、`process`（处理）、`decision`（判断）、`io`（输入/输出）、`subprocess`（子流程）。
+
+命令说明：
+
+| 命令 | 说明 |
+|------|------|
+| `\jqnode{类型}{id}{文本}{位置}` | 放置节点；位置如 `below=of start` |
+| `\jqedge{from}{to}{标签}` | 直连两个节点 |
+| `\jqbranch{from}{to}{标签}{方向}` | 从判断节点引出分支，方向为 `left`/`right`/`above`/`below` |
+
+样式说明：
+
+- 节点采用与主题一致的深灰边框 + 白底，开始/结束节点使用强调色边框。
+- 连线为粗实线，使用 `arrows.meta` Stealth 箭头。
+- 依赖 TikZ 的 `positioning` 库，支持相对定位。
+
 ## 调色板
 
 | 别名 | Hex | 作用 |
@@ -179,11 +301,11 @@ make example
 | `jqgreen` | `#27AE60` | 示例块 |
 | `jqaccent` | — | 当前强调色别名 |
 
-任意位置可用：`	extcolor{jqorange}{...}` · `	extcolor{jqaccent}{...}`
+任意位置可用：`\textcolor{jqorange}{...}` · `\textcolor{jqaccent}{...}`
 
 ## 需求
 
-标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex` —— 默认发行版均已包含。
+标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex`、`listings`（启用 `code` 选项时）、`etoolbox`（CJK 修复使用）。启用 `flowchart` 时需要 TikZ 库 `shapes.geometric`、`shapes.misc`、`positioning`、`arrows.meta` —— 默认发行版均已包含。`example.tex` 中的占位图片使用 `mwe` 宏包，仅编译示例时需要。
 
 ## 许可
 

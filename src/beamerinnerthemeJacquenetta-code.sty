@@ -1,0 +1,103 @@
+% ----------------------------------------------------------
+% beamerinnerthemeJacquenetta-code.sty — Code environments
+% Jacquenetta Beamer Theme | CC BY-SA 4.0
+% ----------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemeJacquenetta-code}%
+  [2026/07/17 v1.1 Jacquenetta code environments]
+
+\mode<presentation>
+
+\RequirePackage{listings}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins, breakable, listings}
+
+% === Global listings style ===
+\definecolor{jq@codebg}{HTML}{F7F7F7}
+
+% Robustly use the theme's CJK-aware mono font if available; otherwise
+% fall back to the standard typewriter family.
+\@ifundefined{jq@monofont}{%
+  \def\jq@codebasicstyle{\ttfamily\footnotesize}%
+}{%
+  \def\jq@codebasicstyle{\jq@monofont\footnotesize}%
+}
+
+\lstset{
+  basicstyle=\jq@codebasicstyle,
+  backgroundcolor=\color{jq@codebg},
+  keywordstyle=\color{jqblue}\bfseries,
+  stringstyle=\color{jqgreen},
+  commentstyle=\color{jqgray}\itshape,
+  numberstyle=\tiny\color{jqgray},
+  numbers=left,
+  numbersep=8pt,
+  stepnumber=1,
+  tabsize=4,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none,
+  xleftmargin=1.5em,
+  aboveskip=4pt,
+  belowskip=4pt,
+  captionpos=b,
+}
+
+% === jqlisting: sliced code, no tcolorbox ===
+\lstnewenvironment{jqlisting}[1][]{%
+  \lstset{#1}%
+}{}
+
+% === \jqinputlisting ===
+\newcommand{\jqinputlisting}[2][]{%
+  \lstinputlisting[#1]{#2}%
+}
+
+% === \jqsetcode ===
+\newcommand{\jqsetcode}[1]{%
+  \lstset{#1}%
+}
+
+% === jqcodebox: tcolorbox + listings ===
+\newtcblisting{jqcodebox}[1][]{
+  enhanced,
+  colback=jq@codebg,
+  colframe=jqaccent,
+  boxrule=0pt,
+  leftrule=3pt,
+  arc=2pt,
+  outer arc=2pt,
+  top=5pt,
+  bottom=5pt,
+  left=4pt,
+  right=4pt,
+  breakable,
+  listing only,
+  language/.code={\pgfkeysalso{listing options={language=##1}}},
+  listing options={
+    basicstyle=\jq@codebasicstyle,
+    keywordstyle=\color{jqblue}\bfseries,
+    stringstyle=\color{jqgreen},
+    commentstyle=\color{jqgray}\itshape,
+    numberstyle=\tiny\color{jqgray},
+    numbers=left,
+    numbersep=8pt,
+    tabsize=4,
+    showstringspaces=false,
+    breaklines=true,
+  },
+  fonttitle=\bfseries\small,
+  coltitle=jqdark,
+  attach boxed title to top left={xshift=3mm, yshift=-3mm},
+  boxed title style={
+    colback=white,
+    colframe=white,
+    boxrule=0pt,
+    size=small,
+  },
+  #1,
+}
+
+\mode<all>
+\endinput

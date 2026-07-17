@@ -20,4 +20,4 @@ uninstall:
 	texhash $(DESTDIR)
 
 clean:
-	cd example && rm -f *.aux *.log *.nav *.out *.snm *.toc *.vrb *.fls *.fdb_latexmk *.synctex.gz *.pdf
+	cd example && rm -f *.aux *.log *.nav *.out *.snm *.toc *.vrb *.listing *.fls *.fdb_latexmk *.synctex.gz *.pdf

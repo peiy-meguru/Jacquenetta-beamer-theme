@@ -1,0 +1,32 @@
+% ----------------------------------------------------------
+% beamerinnerthemeJacquenetta-cjk.sty — Chinese typography fixes
+% Jacquenetta Beamer Theme | CC BY-SA 4.0
+% ----------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemeJacquenetta-cjk}%
+  [2026/07/17 v1.1 Jacquenetta CJK fixes]
+
+\mode<presentation>
+
+\RequirePackage{etoolbox}
+
+% Fix 1: ragged-right for lists and columns to avoid CJK stretching
+\setbeamertemplate{itemize item}{\scriptsize\raise0.2ex\hbox{$\bullet$}}
+\setbeamertemplate{itemize subitem}{\tiny\raise0.2ex\hbox{$\circ$}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise0.2ex\hbox{$\cdot$}}
+
+\apptocmd{\itemize}{\raggedright}{}{}
+\apptocmd{\enumerate}{\raggedright}{}{}
+\apptocmd{\description}{\raggedright}{}{}
+
+% Fix 2: description label spacing
+\setbeamersize{description width=2.0cm}
+\setbeamertemplate{description item}{%
+  \insertdescriptionitem\hspace{0.6em}%
+}
+
+% Fix 3: raggedright inside columns to prevent CJK stretching in narrow cols
+\AtBeginEnvironment{columns}{\raggedright}
+
+\mode<all>
+\endinput
