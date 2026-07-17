@@ -39,13 +39,13 @@ beamerthemeJacquenetta.sty
   └── flowchart option
         └── \useinnertheme{Jacquenetta-flowchart}
               └── beamerinnerthemeJacquenetta-flowchart.sty
-                    ├── TikZ libraries: shapes.geometric, positioning, arrows.meta
+                    ├── TikZ libraries: shapes.geometric, shapes.misc, positioning, arrows.meta
                     ├── Node styles: jqterminator, jqprocess, jqdecision, jqio, jqsubprocess
                     ├── Edge style: jqcedge
                     └── Wrapper commands:
                           \begin{jqflowchart}[options]
                           \jqnode{type}{id}{text}{placement}
-                          \jqedge{from}{to}{label}[options]
+                          \jqedge[<options>]{from}{to}{label}
                           \jqbranch{from}{to}{label}{direction}
 ```
 

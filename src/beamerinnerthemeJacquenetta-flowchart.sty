@@ -134,7 +134,11 @@
 % === \jqedge =========================================================
 % Usage: \jqedge[<options>]{<from>}{<to>}{<label>}
 \newcommand{\jqedge}[4][]{%
-  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
+  \if\relax\detokenize{#4}\relax
+    \draw[jqcedge, #1] (#2) -- (#3);%
+  \else
+    \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
+  \fi
 }
 
 % === \jqbranch =======================================================

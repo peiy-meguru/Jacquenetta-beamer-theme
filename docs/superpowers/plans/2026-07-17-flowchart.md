@@ -530,16 +530,16 @@ cat > /tmp/opencode/flowchart-en-test.tex <<'EOF'
 \usetheme[flowchart]{Jacquenetta}
 \begin{document}
 \begin{frame}{Flowchart}
-\begin{jqflowchart}[node distance=1.5cm and 2.0cm]
+\begin{jqflowchart}[scale=0.8, transform shape, node distance=1.0cm and 1.8cm]
   \jqnode{terminator}{a}{Start}{}
-  \jqnode[below=of a]{process}{b}{Compute}
+  \jqnode{process}{b}{Compute}{below=of a}
   \jqedge{a}{b}{}
-  \jqnode[below=of b]{decision}{c}{OK?}
+  \jqnode{decision}{c}{OK?}{below=of b}
   \jqedge{b}{c}{}
-  \jqnode[right=of c]{process}{d}{Retry}
+  \jqnode{process}{d}{Retry}{right=of c}
   \jqbranch{c}{d}{No}{right}
-  \jqnode[below=of c]{terminator}{e}{End}
-  \jqbranch{c}{e}{Yes}{left}
+  \jqnode{terminator}{e}{End}{below=of c}
+  \jqbranch{c}{e}{Yes}{below}
 \end{jqflowchart}
 \end{frame}
 \end{document}

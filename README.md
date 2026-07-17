@@ -43,6 +43,8 @@ Jacquenetta 是一款简洁、有态度的 Beamer 主题，专为 AI、机器学
 - **中英混排示例**：`example/example.tex` 已更新为中英双语示例，可直接使用
 - **英文回退 Helvetica**：在 XeLaTeX/LuaLaTeX 下通过 `TeX Gyre Heros` 保持英文 Helvetica 风格
 - **简化构建**：`make example` 默认使用 `xelatex`，无需单独的中文编译目标
+- **代码环境**：`code` 选项提供 `jqlisting` 与 `jqcodebox` 代码环境
+- **流程图支持**：`flowchart` 选项提供 `jqflowchart` 环境与 `\jqnode`、`\jqedge`、`\jqbranch` 命令
 
 ## 安装
 
@@ -202,7 +204,7 @@ for epoch in range(epochs):
 \usetheme[chinese, flowchart]{Jacquenetta}
 
 \begin{frame}{训练流程 / Training pipeline}
-\begin{jqflowchart}[node distance=1.3cm and 2.0cm]
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
   \jqnode{terminator}{start}{开始 / Start}{}
   \jqnode{io}{load}{加载数据 / Load data}{below=of start}
   \jqedge{start}{load}{}
