@@ -249,7 +249,7 @@ for epoch in range(epochs):
 | `jqgreen` | `#27AE60` | 示例块 |
 | `jqaccent` | — | 当前强调色别名 |
 
-任意位置可用：`\\textcolor{jqorange}{...}` · `\\textcolor{jqaccent}{...}`
+任意位置可用：`\textcolor{jqorange}{...}` · `\textcolor{jqaccent}{...}`
 
 ## 需求
 
