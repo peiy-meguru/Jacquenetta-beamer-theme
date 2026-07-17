@@ -211,7 +211,7 @@ for epoch in range(epochs):
   \jqnode{decision}{split}{数据足够？}{below=of pre}
   \jqedge{pre}{split}{}
   \jqnode{process}{train}{训练模型 / Train}{below=of split}
-  \jqbranch{split}{train}{是}{right}
+  \jqbranch{split}{train}{是}{below}
   \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
   \jqbranch{split}{collect}{否}{right}
   \jqnode{terminator}{end}{结束 / End}{below=of train}
@@ -251,7 +251,7 @@ for epoch in range(epochs):
 
 ## 需求
 
-标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex`、`listings`（启用 `code` 选项时）、`etoolbox`（CJK 修复使用）。启用 `flowchart` 时需要 TikZ 库 `shapes.geometric`、`positioning`、`arrows.meta` —— 默认发行版均已包含。`example.tex` 中的占位图片使用 `mwe` 宏包，仅编译示例时需要。
+标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex`、`listings`（启用 `code` 选项时）、`etoolbox`（CJK 修复使用）。启用 `flowchart` 时需要 TikZ 库 `shapes.geometric`、`shapes.misc`、`positioning`、`arrows.meta` —— 默认发行版均已包含。`example.tex` 中的占位图片使用 `mwe` 宏包，仅编译示例时需要。
 
 ## 许可
 

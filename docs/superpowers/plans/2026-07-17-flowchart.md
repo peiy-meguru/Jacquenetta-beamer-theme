@@ -129,7 +129,7 @@ Append the edge and label styles.
     font=\scriptsize\sffamily,
     text=jqgray,
     fill=white,
-    inner sep=1pt,
+    inner sep=2pt,
   },
 }
 ```
@@ -149,20 +149,22 @@ Append the high-level commands.
 % === \jqnode =========================================================
 % Usage: \jqnode[<options>]{<type>}{<id>}{<text>}{<relative position>}
 \newcommand{\jqnode}[5][]{%
-  \node[jq#2, #1] (#3) {#4} #5%
+  \node[jq#2, #1, #5] (#3) {#4};%
 }
 
 % === \jqedge =========================================================
 % Usage: \jqedge[<options>]{<from>}{<to>}{<label>}
 \newcommand{\jqedge}[4][]{%
-  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3)%
+  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
 }
 
 % === \jqbranch =======================================================
 % Usage: \jqbranch[<options>]{<from>}{<to>}{<label>}{<direction>}
-% <direction> should be a TikZ anchor name such as left, right, above, below.
+% <direction> should be a TikZ direction keyword such as left, right, above, below.
+% The actual implementation maps these to anchors and uses border anchors to avoid
+% PGF warnings on non-rectangular nodes (see the shipped .sty file).
 \newcommand{\jqbranch}[5][]{%
-  \draw[jqcedge, #1] (#2.#5) -- ++(#5:0.6cm) -| node[pos=0.75, jqclabel, anchor=opposite direction of #5] {#4} (#3)%
+  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
 }
 ```
 
@@ -291,46 +293,46 @@ After the `\section{代码 / Code}` section and before `\section{颜色 / Colors
 \section{流程图 / Flowcharts}
 % ============================================================
 
-\sectionframe{03}{流程图 Flowcharts}
+\sectionframe{04}{流程图 Flowcharts}
 
 \begin{frame}{训练流程 / Training pipeline}
-\begin{jqflowchart}[node distance=1.3cm and 2.0cm]
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
   \jqnode{terminator}{start}{开始 / Start}{}
-  \jqnode[below=of start]{io}{load}{加载数据 / Load data}
+  \jqnode{io}{load}{加载数据 / Load data}{below=of start}
   \jqedge{start}{load}{}
-  \jqnode[below=of load]{process}{pre}{预处理 / Preprocess}
+  \jqnode{process}{pre}{预处理 / Preprocess}{below=of load}
   \jqedge{load}{pre}{}
-  \jqnode[below=of pre]{decision}{split}{数据足够？}
+  \jqnode{decision}{split}{数据足够？}{below=of pre}
   \jqedge{pre}{split}{}
-  \jqnode[below=of split]{process}{train}{训练模型 / Train}
-  \jqbranch{split}{train}{是}{right}
-  \jqnode[right=of split]{process}{collect}{收集更多数据 / Collect more}
+  \jqnode{process}{train}{训练模型 / Train}{below=of split}
+  \jqbranch{split}{train}{是}{below}
+  \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
   \jqbranch{split}{collect}{否}{right}
-  \jqnode[below=of train]{terminator}{end}{结束 / End}
+  \jqnode{terminator}{end}{结束 / End}{below=of train}
   \jqedge{train}{end}{}
 \end{jqflowchart}
 \end{frame}
 
 \begin{frame}{模型推断 / Inference}
-\begin{jqflowchart}[node distance=1.4cm and 2.4cm]
+\begin{jqflowchart}[scale=0.85, transform shape, node distance=1.2cm and 2.0cm]
   \jqnode{terminator}{in}{输入样本 / Input}{}
-  \jqnode[right=of in]{subprocess}{model}{模型前向 / Forward pass}
+  \jqnode{subprocess}{model}{模型前向 / Forward pass}{right=of in}
   \jqedge{in}{model}{}
-  \jqnode[right=of model]{decision}{thresh}{置信度 > 0.5？}
+  \jqnode{decision}{thresh}{置信度 > 0.5？}{right=of model}
   \jqedge{model}{thresh}{}
-  \jqnode[below=of thresh]{process}{pos}{正例 / Positive}
-  \jqbranch{thresh}{pos}{Yes}{left}
-  \jqnode[above=of thresh]{process}{neg}{负例 / Negative}
-  \jqbranch{thresh}{neg}{No}{right}
+  \jqnode{process}{pos}{正例 / Positive}{below=of thresh}
+  \jqbranch{thresh}{pos}{Yes}{below}
+  \jqnode{process}{neg}{负例 / Negative}{above=of thresh}
+  \jqbranch{thresh}{neg}{No}{above}
 \end{jqflowchart}
 \end{frame}
 ```
 
 - [ ] **Step 3: Renumber the following section frames**
 
-Because the new section takes the number `03`, renumber the existing sections:
+Because the new section is inserted after the code section, the code section keeps `03` and the new flowcharts section takes `04`. Renumber the following sections:
 
-- `\sectionframe{03}{代码 Code}` → `\sectionframe{04}{代码 Code}`
+- `\sectionframe{03}{流程图 Flowcharts}` → `\sectionframe{04}{流程图 Flowcharts}`
 - `\sectionframe{04}{颜色 Colors}` → `\sectionframe{05}{颜色 Colors}`
 - `\sectionframe{05}{总结 Conclusion}` → `\sectionframe{06}{总结 Conclusion}`
 
@@ -389,19 +391,19 @@ Insert a new section after the "代码环境" section.
 \usetheme[chinese, flowchart]{Jacquenetta}
 
 \begin{frame}{训练流程 / Training pipeline}
-\begin{jqflowchart}[node distance=1.3cm and 2.0cm]
+\begin{jqflowchart}[scale=0.75, transform shape, node distance=0.5cm and 0.8cm]
   \jqnode{terminator}{start}{开始 / Start}{}
-  \jqnode[below=of start]{io}{load}{加载数据 / Load data}
+  \jqnode{io}{load}{加载数据 / Load data}{below=of start}
   \jqedge{start}{load}{}
-  \jqnode[below=of load]{process}{pre}{预处理 / Preprocess}
+  \jqnode{process}{pre}{预处理 / Preprocess}{below=of load}
   \jqedge{load}{pre}{}
-  \jqnode[below=of pre]{decision}{split}{数据足够？}
+  \jqnode{decision}{split}{数据足够？}{below=of pre}
   \jqedge{pre}{split}{}
-  \jqnode[below=of split]{process}{train}{训练模型 / Train}
-  \jqbranch{split}{train}{是}{right}
-  \jqnode[right=of split]{process}{collect}{收集更多数据 / Collect more}
+  \jqnode{process}{train}{训练模型 / Train}{below=of split}
+  \jqbranch{split}{train}{是}{below}
+  \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
   \jqbranch{split}{collect}{否}{right}
-  \jqnode[below=of train]{terminator}{end}{结束 / End}
+  \jqnode{terminator}{end}{结束 / End}{below=of train}
   \jqedge{train}{end}{}
 \end{jqflowchart}
 \end{frame}
