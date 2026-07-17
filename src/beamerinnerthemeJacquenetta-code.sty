@@ -1,0 +1,94 @@
+% ----------------------------------------------------------
+% beamerinnerthemeJacquenetta-code.sty — Code environments
+% Jacquenetta Beamer Theme | CC BY-SA 4.0
+% ----------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemeJacquenetta-code}%
+  [2026/07/17 v1.1 Jacquenetta code environments]
+
+\mode<presentation>
+
+\RequirePackage{listings}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% === Global listings style ===
+\definecolor{jq@codebg}{HTML}{F7F7F7}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{jq@codebg},
+  keywordstyle=\color{jqblue}\bfseries,
+  stringstyle=\color{jqgreen},
+  commentstyle=\color{jqgray}\itshape,
+  numberstyle=\tiny\color{jqgray},
+  numbers=left,
+  numbersep=6pt,
+  stepnumber=1,
+  tabsize=4,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=none,
+  xleftmargin=1.2em,
+  aboveskip=0pt,
+  belowskip=0pt,
+  captionpos=b,
+}
+
+% === jqlisting: sliced code, no tcolorbox ===
+\lstnewenvironment{jqlisting}[1][]{%
+  \lstset{#1}%
+}{}
+
+% === \jqinputlisting ===
+\newcommand{\jqinputlisting}[2][]{%
+  \lstinputlisting[#1]{#2}%
+}
+
+% === \jqsetcode ===
+\newcommand{\jqsetcode}[1]{%
+  \lstset{#1}%
+}
+
+% === jqcodebox: tcolorbox + listings ===
+\newtcblisting{jqcodebox}[1][]{
+  enhanced,
+  colback=jq@codebg,
+  colframe=jqaccent,
+  boxrule=0pt,
+  leftrule=3pt,
+  arc=2pt,
+  outer arc=2pt,
+  top=2pt,
+  bottom=2pt,
+  left=2pt,
+  right=2pt,
+  breakable,
+  listing only,
+  listing options={
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{jqblue}\bfseries,
+    stringstyle=\color{jqgreen},
+    commentstyle=\color{jqgray}\itshape,
+    numberstyle=\tiny\color{jqgray},
+    numbers=left,
+    numbersep=6pt,
+    tabsize=4,
+    showstringspaces=false,
+    breaklines=true,
+  },
+  fonttitle=\bfseries\small,
+  coltitle=jqdark,
+  attach boxed title to top left={xshift=3mm, yshift=-3mm},
+  boxed title style={
+    colback=white,
+    colframe=white,
+    boxrule=0pt,
+    size=small,
+  },
+  #1,
+}
+
+\mode<all>
+\endinput
