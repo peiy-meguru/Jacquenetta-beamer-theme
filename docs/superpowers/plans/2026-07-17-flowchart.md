@@ -81,8 +81,6 @@ Append the following TikZ style definitions after the `\usetikzlibrary` line.
   jqterminator/.style={
     jqcbase,
     shape=rounded rectangle,
-    rounded rectangle west arc=0pt,
-    rounded rectangle east arc=0pt,
     draw=jqaccent,
     line width=1.2pt,
   },
@@ -165,10 +163,13 @@ Append the high-level commands.
 % === \jqbranch =======================================================
 % Usage: \jqbranch[<options>]{<from>}{<to>}{<label>}{<direction>}
 % <direction> should be a TikZ direction keyword such as left, right, above, below.
-% The actual implementation maps these to anchors, uses border anchors to avoid
-% PGF warnings on non-rectangular nodes, and omits the label when empty.
+% The actual implementation (see the shipped .sty file) maps these keywords to
+% compass anchors and orthogonal path operators (-| for horizontal branches,
+% |- for vertical ones), draws to the target's border anchor to avoid PGF
+% warnings on non-rectangular nodes, and omits the label node when empty.
+% Simplified interface sketch:
 \newcommand{\jqbranch}[5][]{%
-  \draw[jqcedge, #1] (#2) -- node[midway, jqclabel] {#4} (#3);%
+  % dispatch to \jqbranch@h (left/right) or \jqbranch@v (above/below)
 }
 ```
 

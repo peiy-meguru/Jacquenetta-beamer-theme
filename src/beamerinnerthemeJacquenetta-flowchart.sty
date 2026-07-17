@@ -126,9 +126,6 @@
 % === \jqnode =========================================================
 % Usage: \jqnode[<options>]{<type>}{<id>}{<text>}{<relative position>}
 \newcommand{\jqnode}[5][]{%
-  \ifcsname jq#2\endcsname\else
-    \PackageWarning{beamerinnerthemeJacquenetta-flowchart}{Unknown node type '#2'. Known types: terminator, process, decision, io, subprocess}%
-  \fi
   \node[jq#2, #1, #5] (#3) {#4};%
 }
 
