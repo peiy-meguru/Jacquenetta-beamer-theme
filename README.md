@@ -113,6 +113,7 @@ make example
 | `noborder` | 关闭签名边框 | 关闭 |
 | `chinese` | 启用中文 CJK 支持（XeLaTeX/LuaLaTeX） | 关闭 |
 | `code` | 启用 `jqlisting` 与 `jqcodebox` 代码环境 | 关闭 |
+| `flowchart` | 启用流程图环境 | 关闭 |
 
 ## 中文支持
 
@@ -193,6 +194,48 @@ for epoch in range(epochs):
 - 使用 `\jqinputlisting[language=Python, firstline=1, lastline=20]{file.py}` 直接读取外部文件。
 - 包含代码环境的 `frame` 需要声明 `[fragile]`。
 
+## 流程图 / Flowcharts
+
+启用 `flowchart` 选项后，可以使用基于 TikZ 的流程图环境：
+
+```latex
+\usetheme[chinese, flowchart]{Jacquenetta}
+
+\begin{frame}{训练流程 / Training pipeline}
+\begin{jqflowchart}[node distance=1.3cm and 2.0cm]
+  \jqnode{terminator}{start}{开始 / Start}{}
+  \jqnode[below=of start]{io}{load}{加载数据 / Load data}
+  \jqedge{start}{load}{}
+  \jqnode[below=of load]{process}{pre}{预处理 / Preprocess}
+  \jqedge{load}{pre}{}
+  \jqnode[below=of pre]{decision}{split}{数据足够？}
+  \jqedge{pre}{split}{}
+  \jqnode[below=of split]{process}{train}{训练模型 / Train}
+  \jqbranch{split}{train}{是}{right}
+  \jqnode[right=of split]{process}{collect}{收集更多数据 / Collect more}
+  \jqbranch{split}{collect}{否}{right}
+  \jqnode[below=of train]{terminator}{end}{结束 / End}
+  \jqedge{train}{end}{}
+\end{jqflowchart}
+\end{frame}
+```
+
+节点类型：`terminator`（开始/结束）、`process`（处理）、`decision`（判断）、`io`（输入/输出）、`subprocess`（子流程）。
+
+命令说明：
+
+| 命令 | 说明 |
+|------|------|
+| `\jqnode{类型}{id}{文本}{位置}` | 放置节点；位置如 `below=of start` |
+| `\jqedge{from}{to}{标签}` | 直连两个节点 |
+| `\jqbranch{from}{to}{标签}{方向}` | 从判断节点引出分支，方向为 `left`/`right`/`above`/`below` |
+
+样式说明：
+
+- 节点采用与主题一致的深灰边框 + 白底，开始/结束节点使用强调色边框。
+- 连线为粗实线，使用 `arrows.meta` Stealth 箭头。
+- 依赖 TikZ 的 `positioning` 库，支持相对定位。
+
 ## 调色板
 
 | 别名 | Hex | 作用 |
@@ -208,7 +251,7 @@ for epoch in range(epochs):
 
 ## 需求
 
-标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex`、`listings`（启用 `code` 选项时）、`etoolbox`（CJK 修复使用）—— 默认发行版均已包含。`example.tex` 中的占位图片使用 `mwe` 宏包，仅编译示例时需要。
+标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex`、`listings`（启用 `code` 选项时）、`etoolbox`（CJK 修复使用）。启用 `flowchart` 时需要 TikZ 库 `shapes.geometric`、`positioning`、`arrows.meta` —— 默认发行版均已包含。`example.tex` 中的占位图片使用 `mwe` 宏包，仅编译示例时需要。
 
 ## 许可
 
