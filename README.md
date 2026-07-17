@@ -46,7 +46,7 @@ Jacquenetta 是一款简洁、有态度的 Beamer 主题，专为 AI、机器学
 
 ## 安装
 
-将 `src/` 中的五个 `.sty` 文件复制到你的项目目录：
+将 `src/` 中的所有 `.sty` 文件复制到你的项目目录：
 
 ```bash
 cp src/*.sty /path/to/your/project/
@@ -208,7 +208,7 @@ for epoch in range(epochs):
 
 ## 需求
 
-标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex` —— 默认发行版均已包含。
+标准 TeX Live 2020+ 或 MiKTeX 24+ 安装。所需宏包：`tikz`、`tcolorbox`（skins 库）、`helvet`、`microtype`、`setspace`、`ctex`、`listings`（启用 `code` 选项时）、`etoolbox`（CJK 修复使用）—— 默认发行版均已包含。`example.tex` 中的占位图片使用 `mwe` 宏包，仅编译示例时需要。
 
 ## 许可
 
