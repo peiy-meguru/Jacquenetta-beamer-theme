@@ -204,17 +204,17 @@ for epoch in range(epochs):
 \begin{frame}{训练流程 / Training pipeline}
 \begin{jqflowchart}[node distance=1.3cm and 2.0cm]
   \jqnode{terminator}{start}{开始 / Start}{}
-  \jqnode[below=of start]{io}{load}{加载数据 / Load data}
+  \jqnode{io}{load}{加载数据 / Load data}{below=of start}
   \jqedge{start}{load}{}
-  \jqnode[below=of load]{process}{pre}{预处理 / Preprocess}
+  \jqnode{process}{pre}{预处理 / Preprocess}{below=of load}
   \jqedge{load}{pre}{}
-  \jqnode[below=of pre]{decision}{split}{数据足够？}
+  \jqnode{decision}{split}{数据足够？}{below=of pre}
   \jqedge{pre}{split}{}
-  \jqnode[below=of split]{process}{train}{训练模型 / Train}
+  \jqnode{process}{train}{训练模型 / Train}{below=of split}
   \jqbranch{split}{train}{是}{right}
-  \jqnode[right=of split]{process}{collect}{收集更多数据 / Collect more}
+  \jqnode{process}{collect}{收集更多数据 / Collect more}{right=of split}
   \jqbranch{split}{collect}{否}{right}
-  \jqnode[below=of train]{terminator}{end}{结束 / End}
+  \jqnode{terminator}{end}{结束 / End}{below=of train}
   \jqedge{train}{end}{}
 \end{jqflowchart}
 \end{frame}
