@@ -1,0 +1,20 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme[flowchart]{Jacquenetta}
+
+\begin{document}
+
+\begin{frame}{Flowchart regression test}
+\begin{jqflowchart}[scale=0.8, transform shape, node distance=1.0cm and 1.8cm]
+  \jqnode{terminator}{a}{Start}{}
+  \jqnode{process}{b}{Compute}{below=of a}
+  \jqedge{a}{b}{}
+  \jqnode{decision}{c}{OK?}{below=of b}
+  \jqedge{b}{c}{}
+  \jqnode{process}{d}{Retry}{right=of c}
+  \jqbranch{c}{d}{No}{right}
+  \jqnode{terminator}{e}{End}{below=of c}
+  \jqbranch{c}{e}{Yes}{below}
+\end{jqflowchart}
+\end{frame}
+
+\end{document}

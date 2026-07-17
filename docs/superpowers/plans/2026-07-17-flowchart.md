@@ -176,7 +176,7 @@ Append the high-level commands.
 **Verification:** Run the following in the project root to ensure the file parses:
 
 ```bash
-cd /tmp/opencode/jacquenetta-worktree
+cd /path/to/jacquenetta-worktree
 TEXINPUTS=./src: xelatex -interaction=nonstopmode -no-pdf \
   "\RequirePackage{beamerthemeJacquenetta}\useinnertheme{Jacquenetta-flowchart}\stop" 2>&1 | grep -i "error\|emergency"
 ```
@@ -344,7 +344,7 @@ Because the new section is inserted after the code section, the code section kee
 **Verification:** Compile the example.
 
 ```bash
-cd /tmp/opencode/jacquenetta-worktree
+cd /path/to/jacquenetta-worktree
 make example 2>&1 | tail -20
 ```
 
@@ -467,7 +467,7 @@ git commit -m "docs(readme): document flowchart option and commands"
 - [ ] **Step 1: Regenerate the example PDF**
 
 ```bash
-cd /tmp/opencode/jacquenetta-worktree
+cd /path/to/jacquenetta-worktree
 make example
 ```
 
@@ -549,8 +549,8 @@ cat > /tmp/opencode/flowchart-en-test.tex <<'EOF'
 \end{frame}
 \end{document}
 EOF
-TEXINPUTS=/tmp/opencode/jacquenetta-worktree/src: xelatex -interaction=nonstopmode /tmp/opencode/flowchart-en-test.tex 2>&1 | tail -5
-TEXINPUTS=/tmp/opencode/jacquenetta-worktree/src: xelatex -interaction=nonstopmode /tmp/opencode/flowchart-en-test.tex 2>&1 | tail -5
+TEXINPUTS=/path/to/jacquenetta-worktree/src: xelatex -interaction=nonstopmode /tmp/opencode/flowchart-en-test.tex 2>&1 | tail -5
+TEXINPUTS=/path/to/jacquenetta-worktree/src: xelatex -interaction=nonstopmode /tmp/opencode/flowchart-en-test.tex 2>&1 | tail -5
 ```
 
 Expected: Output written to `flowchart-en-test.pdf`.
@@ -558,7 +558,7 @@ Expected: Output written to `flowchart-en-test.pdf`.
 - [ ] **Step 3: Run full example check**
 
 ```bash
-cd /tmp/opencode/jacquenetta-worktree
+cd /path/to/jacquenetta-worktree
 make clean && make example 2>&1 | tail -5
 grep -i "missing character\|font nullfont" example/example.log || echo "No nullfont warnings"
 ```
