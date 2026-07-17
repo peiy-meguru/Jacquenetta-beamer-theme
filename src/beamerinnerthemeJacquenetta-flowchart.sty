@@ -69,7 +69,7 @@
     font=\scriptsize\sffamily,
     text=jqgray,
     fill=white,
-    inner sep=1pt,
+    inner sep=2pt,
   },
 }
 
@@ -146,10 +146,10 @@
 % Drawing to the target's border anchor avoids PGF warnings on
 % non-rectangular nodes (e.g. diamonds) and keeps arrowheads aligned.
 \newcommand{\jqbranch@h}[5][]{%
-  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.75, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) -| node[pos=0.5, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
 }
 \newcommand{\jqbranch@v}[5][]{%
-  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) |- node[pos=0.75, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
+  \draw[jqcedge, #1] (#2.\jqtoanchor{#5}) -- ++(\jqtoanchor{#5}:0.6cm) |- node[pos=0.5, jqclabel, anchor=\jqtooppanchor{#5}] {#4} (#3.\jqtotargetanchor{#5});%
 }
 \newcommand{\jqbranch}[5][]{%
   \ifcsname jq@branch@#5\endcsname
