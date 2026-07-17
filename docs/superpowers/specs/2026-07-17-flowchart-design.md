@@ -85,7 +85,7 @@ All nodes accept `fill=<color>`, `draw=<color>`, and `accent` overrides through 
 \end{jqflowchart}
 ```
 
-Wraps `\begin{tikzpicture}[...]` and sets default styles.
+Wraps `\begin{tikzpicture}[...]`; users pass TikZ options such as `scale` and `node distance` to control layout.
 
 #### Node command
 
